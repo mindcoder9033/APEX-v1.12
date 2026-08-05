@@ -1,19 +1,19 @@
 ---
-version: 1.0.0
-name: APEX Dark Telemetry
-description: Precision racing telemetry visual language for the APEX Sim Racing Academy. High contrast, dark slate base, vibrant telemetry accents (Green, Amber, Red), non-gamified objective coaching UI inspired by industrial engineering and professional motorsport.
+version: 1.1.0
+name: APEX F1 Red Telemetry
+description: Precision racing telemetry visual language for the APEX Sim Racing Academy. High contrast F1 Pit-Garage pure carbon base (#08080A), iconic F1 Red accents (#E10600), high-contrast Racing Amber warnings (#FFB800), and objective non-gamified coaching UI inspired by Formula 1 engineering and telemetry workstations.
 colors:
-  primary: "#00E599"        # Telemetry Green (mastery, optimal delta, active telemetry)
-  primary-hover: "#00FFAB"
-  secondary: "#3B82F6"      # Telemetry Blue (curriculum, information, telemetry trace)
+  primary: "#E10600"        # F1 Red (mastery, optimal delta, primary brand, active telemetry)
+  primary-hover: "#FF1E19"
+  secondary: "#3B82F6"      # Telemetry Blue (curriculum trace, secondary information)
   secondary-hover: "#60A5FA"
-  warning: "#FFB800"        # Telemetry Amber (remediation required, threshold warning)
-  danger: "#FF3B30"         # Apex Red (critical error, abrupt input, apex missed)
-  neutral-bg: "#090A0F"     # Matte Charcoal Base (Surface 0)
-  neutral-surface: "#12151E" # Dark Steel Panel & Card Surface (Surface 1 & 2)
-  neutral-surface-hover: "#1A1E2B"
-  neutral-border: "#262C3D" # Border & Grid Dividers
-  neutral-text: "#F3F4F6"   # Crisp Telemetry Off-White Text
+  warning: "#FFB800"        # Racing Amber (error alert, threshold warning, remediation required)
+  danger: "#FFB800"         # High-Contrast Alert Amber
+  neutral-bg: "#08080A"     # F1 Pit-Garage Pure Carbon Base (Surface 0)
+  neutral-surface: "#121216" # Dark Carbon Panel & Card Surface (Surface 1 & 2)
+  neutral-surface-hover: "#1A1A20"
+  neutral-border: "#262630" # Border & Telemetry Grid Dividers
+  neutral-text: "#F3F4F6"   # Crisp Off-White Telemetry Text
   neutral-muted: "#9CA3AF"  # Secondary Text & Labels (Cool Gray)
   neutral-dim: "#4B5563"    # Disabled / Locked items
 typography:
@@ -80,7 +80,7 @@ components:
     border: "1px solid {colors.neutral-border}"
   button-primary:
     backgroundColor: "{colors.primary}"
-    textColor: "{colors.neutral-bg}"
+    textColor: "#FFFFFF"
     rounded: "{rounded.md}"
     padding: "10px 20px"
   button-secondary:
@@ -98,29 +98,28 @@ components:
     padding: "4px 10px"
 ---
 
-# APEX Sim Racing Academy — Design Specification
+# APEX Sim Racing Academy — F1 Red Design Specification
 
 ## Overview
 
 APEX is a **curriculum-driven sim racing academy** designed for complete beginners utilizing the Moza R3 Racing Wheel and Forza Motorsport (2023).
 
-The visual design language is strictly **non-gamified, objective, and telemetry-focused**. Inspired by real-world motorsport telemetry software (Moza Pit House, MotEC i2 Pro, McLaren Applied Technologies), APEX avoids cartoonish gamification or superficial rewards in favor of precision, clarity, and disciplined coaching interfaces.
+The visual design language is strictly **non-gamified, objective, and telemetry-focused** with an iconic **Formula 1 Pit-Garage** aesthetic. F1 Red (`#E10600`) serves as the dominant brand color and mastery indicator against a pitch-black pure carbon base (`#08080A`).
 
-> **Design Statement:** Professional driver education powered by industrial-grade interface design.
+> **Design Statement:** Professional driver education powered by Formula 1 telemetry interface design.
 
 ---
 
 ## Colors
 
-The APEX color system is functional, meaningful, and disciplined.
+The APEX color system is functional, high-contrast, and disciplined:
 
-- **Primary Background (`#090A0F`):** Matte Charcoal base (Surface 0).
-- **Primary Surface (`#12151E`):** Dark Steel panel and card surface (Surface 1 & 2).
-- **Border Divider (`#262C3D`):** Low-contrast gridlines and container borders.
-- **Telemetry Green (`#00E599`):** Represents optimal performance, demonstrated mastery, passing criteria, and active telemetry.
-- **Telemetry Blue (`#3B82F6`):** Information, active navigation, curriculum progress, and telemetry trace.
-- **Telemetry Amber (`#FFB800`):** Remediation required, threshold warnings, and sub-optimal technique.
-- **Apex Red (`#FF3B30`):** Highlights critical technique errors (abrupt brake release, severe lock-up, missed apex).
+- **Primary Background (`#08080A`):** F1 Pit-Garage Pure Carbon base (Surface 0).
+- **Primary Surface (`#121216`):** Dark Carbon panel and card surface (Surface 1 & 2).
+- **Border Divider (`#262630`):** Low-contrast gridlines and container borders.
+- **F1 Red (`#E10600`):** Represents primary actions, active brand identity, demonstrated mastery, passing criteria, and active telemetry traces.
+- **Telemetry Blue (`#3B82F6`):** Information, active navigation, curriculum progress, and secondary telemetry traces.
+- **Racing Amber (`#FFB800`):** High-contrast warning alerts, missed apexes, threshold warnings, and remediation indicators.
 - **Telemetry Text (`#F3F4F6`):** Crisp off-white typography for high contrast under cockpit lighting.
 - **Cool Gray (`#9CA3AF`):** Secondary metadata labels and supporting text.
 
@@ -151,7 +150,7 @@ APEX implements a desktop-first **Engineering Workstation** layout consisting of
 ```
 
 - **Maximum Content Width:** 1440px.
-- **Background Grid:** Subtle 32px telemetry gridlines (`#262C3D` at 30% opacity).
+- **Background Grid:** Subtle 32px telemetry gridlines (`#262630` at 30% opacity).
 - **Responsive Behavior:** On tablet, Coach Console collapses into a slide-out drawer; on mobile, content wraps into a single column.
 
 ---
@@ -160,11 +159,11 @@ APEX implements a desktop-first **Engineering Workstation** layout consisting of
 
 Surfaces resemble stacked industrial engineering panels. Elevation is communicated through **brightness gradient steps** rather than heavy drop shadows:
 
-- **Surface 0 (`#090A0F`):** Application Canvas Background.
-- **Surface 1 (`#12151E`):** Navigation Bar, Header, and Coach Console.
-- **Surface 2 (`#1A1E2B`):** Cards, Panels, and Interactive Controls.
-- **Surface 3 (`#262C3D`):** Active Selection & Hover States.
-- **Surface 4 (`#12151E` with `#00E599` outline):** Dialog Modals.
+- **Surface 0 (`#08080A`):** Application Canvas Background.
+- **Surface 1 (`#121216`):** Navigation Bar, Header, and Coach Console.
+- **Surface 2 (`#1A1A20`):** Cards, Panels, and Interactive Controls.
+- **Surface 3 (`#262630`):** Active Selection & Hover States.
+- **Surface 4 (`#121216` with `#E10600` outline):** Dialog Modals.
 
 ---
 
@@ -184,10 +183,10 @@ Geometry communicates industrial quality and precision:
 The component system consists of three distinct layers:
 
 ### 1. Foundation Components
-- **Button:** Primary (`#00E599`), Secondary (`#3B82F6`), Telemetry/Ghost (`#12151E` with `#262C3D` border), Danger (`#FF3B30`).
-- **Card:** Dark steel background (`#12151E`), 1px border (`#262C3D`), 12px radius.
-- **Badge:** Pill shape (`rounded-full`) with semantic telemetry state colors.
-- **TelemetryBar:** Quantitative progress bar displaying target vs actual threshold.
+- **Button:** Primary (`#E10600`), Secondary (`#3B82F6`), Telemetry/Ghost (`#121216` with `#262630` border), Danger (`#FFB800`).
+- **Card:** Dark carbon background (`#121216`), 1px border (`#262630`), 12px radius.
+- **Badge:** Pill shape (`rounded-full`) with F1 Red or Racing Amber state colors.
+- **TelemetryBar:** Quantitative progress bar displaying target vs actual threshold in F1 Red.
 
 ### 2. Academy Components
 - **LearningObjective:** Displays session objective, expected outcome, and time estimate in `IBM Plex Sans`.
@@ -196,17 +195,17 @@ The component system consists of three distinct layers:
 - **DrillCard:** Single-skill practical exercise specifications.
 
 ### 3. Motorsport Components
-- **CoachConsole:** Persistent contextual coaching panel showing current objective, mastery criteria, and prescriptions.
+- **CoachConsole:** Persistent contextual coaching panel showing current objective, mastery criteria, and prescriptions in F1 Red.
 - **TrainingPrescription:** Clear practice parameters (Track, Car, Weather, Transmission, Assists).
-- **MasteryIndicator:** Factual indicator (Not Started, In Progress, Mastered, Remediation Required).
+- **MasteryIndicator:** Factual indicator in F1 Red (Not Started, In Progress, Mastered, Remediation Required).
 
 ---
 
 ## Do's and Don'ts
 
+- **DO** use F1 Red (`#E10600`) as the dominant primary brand and mastery accent color.
+- **DO** use Racing Amber (`#FFB800`) for errors and warnings to ensure clear contrast against F1 Red.
 - **DO** use monospace font (`JetBrains Mono`) for all numerical telemetry data and lap times.
 - **DO** maintain strict WCAG AA contrast (4.5:1 ratio) across all text elements.
-- **DO** present objective feedback (e.g. `Brake release variance: 14% (Pass: <5%)`).
 - **DON'T** use gamified elements like trophies, stars, celebratory confetti, or artificial XP points.
-- **DON'T** allow skipping of locked curriculum modules.
-- **DON'T** use glossy gradients or glassmorphism blurs that distract from telemetry data.
+- **DON'T** mix green accent colors into the UI; F1 Red is the single mastery accent.

@@ -42,14 +42,14 @@ export const CoachConsole: React.FC<CoachConsoleProps> = ({
   return (
     <aside className={`w-80 flex-shrink-0 flex flex-col gap-4 ${className || ''}`}>
       {/* Coach Console Panel Header */}
-      <div className="bg-[#12151E] border border-[#262C3D] rounded-xl p-4 flex items-center justify-between">
+      <div className="bg-[#121216] border border-[#262630] rounded-xl p-4 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-lg bg-[#00E599]/10 text-[#00E599] border border-[#00E599]/30">
+          <div className="p-2 rounded-lg bg-[#E10600]/10 text-[#E10600] border border-[#E10600]/30">
             <Cpu className="w-4 h-4" />
           </div>
           <div>
             <h3 className="font-sans font-semibold text-sm text-[#F3F4F6]">Coach Console</h3>
-            <p className="font-mono text-[11px] text-[#9CA3AF]">Moza R3 Telemetry Engine</p>
+            <p className="font-mono text-[11px] text-[#9CA3AF]">F1 Telemetry Engine</p>
           </div>
         </div>
         <Badge variant="success" className="animate-pulse">Active</Badge>
@@ -57,7 +57,7 @@ export const CoachConsole: React.FC<CoachConsoleProps> = ({
 
       {/* Today's Training Objective */}
       <Card accentBorder className="space-y-3">
-        <div className="flex items-center gap-2 text-[#00E599]">
+        <div className="flex items-center gap-2 text-[#E10600]">
           <Target className="w-4 h-4" />
           <span className="font-mono text-xs font-semibold uppercase tracking-wider">Active Objective</span>
         </div>
@@ -69,7 +69,7 @@ export const CoachConsole: React.FC<CoachConsoleProps> = ({
       {/* Live Telemetry Target Benchmarks */}
       {telemetryMetrics && telemetryMetrics.length > 0 && (
         <Card className="space-y-3">
-          <div className="flex items-center gap-2 text-[#3B82F6]">
+          <div className="flex items-center gap-2 text-[#E10600]">
             <Activity className="w-4 h-4" />
             <span className="font-mono text-xs font-semibold uppercase tracking-wider">Telemetry Targets</span>
           </div>
@@ -95,15 +95,15 @@ export const CoachConsole: React.FC<CoachConsoleProps> = ({
           <span className="font-mono text-xs font-semibold uppercase tracking-wider">Prescribed Config</span>
         </div>
         <div className="space-y-1.5 font-mono text-xs text-[#9CA3AF]">
-          <div className="flex justify-between border-b border-[#262C3D]/50 pb-1">
+          <div className="flex justify-between border-b border-[#262630]/50 pb-1">
             <span>Track:</span>
             <span className="text-[#F3F4F6] font-medium">{prescription.track}</span>
           </div>
-          <div className="flex justify-between border-b border-[#262C3D]/50 pb-1">
+          <div className="flex justify-between border-b border-[#262630]/50 pb-1">
             <span>Vehicle:</span>
             <span className="text-[#F3F4F6] font-medium">{prescription.car}</span>
           </div>
-          <div className="flex justify-between border-b border-[#262C3D]/50 pb-1">
+          <div className="flex justify-between border-b border-[#262630]/50 pb-1">
             <span>Assists:</span>
             <span className="text-[#F3F4F6] font-medium">{prescription.assists}</span>
           </div>
@@ -116,8 +116,8 @@ export const CoachConsole: React.FC<CoachConsoleProps> = ({
 
       {/* Coach Note / Guidance */}
       {coachAdvice && (
-        <Card className="space-y-2 bg-[#161B26] border-[#3B82F6]/30">
-          <div className="flex items-center gap-2 text-[#3B82F6]">
+        <Card className="space-y-2 bg-[#1A1A20] border-[#E10600]/30">
+          <div className="flex items-center gap-2 text-[#E10600]">
             <Award className="w-4 h-4" />
             <span className="font-mono text-xs font-semibold uppercase tracking-wider">Coach Guidance</span>
           </div>

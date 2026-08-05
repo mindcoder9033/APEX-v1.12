@@ -19,9 +19,9 @@ export const TelemetryBar: React.FC<TelemetryBarProps> = ({
   className,
 }) => {
   const statusColors = {
-    optimal: 'bg-[#00E599]',
+    optimal: 'bg-[#E10600]',
     warning: 'bg-[#FFB800]',
-    critical: 'bg-[#FF3B30]',
+    critical: 'bg-[#FFB800]',
   }
 
   return (
@@ -35,7 +35,7 @@ export const TelemetryBar: React.FC<TelemetryBarProps> = ({
           <span className="text-[#F3F4F6] font-bold">{value}{unit}</span>
         </div>
       </div>
-      <div className="h-3 w-full bg-[#1A1E2B] border border-[#262C3D] rounded relative overflow-hidden">
+      <div className="h-3 w-full bg-[#1A1A20] border border-[#262630] rounded relative overflow-hidden">
         {/* Target line indicator if set */}
         {target !== undefined && (
           <div

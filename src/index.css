@@ -3,16 +3,16 @@
 
 @layer base {
   :root {
-    --bg-main: #090a0f;
-    --bg-surface: #12151e;
-    --bg-surface-hover: #1a1e2b;
-    --border-color: #262c3d;
-    --color-primary: #00e599;
-    --color-primary-hover: #00ffab;
+    --bg-main: #08080a;
+    --bg-surface: #121216;
+    --bg-surface-hover: #1a1a20;
+    --border-color: #262630;
+    --color-primary: #e10600;
+    --color-primary-hover: #ff1e19;
     --color-secondary: #3b82f6;
     --color-secondary-hover: #60a5fa;
     --color-warning: #ffb800;
-    --color-danger: #ff3b30;
+    --color-danger: #ffb800;
     --text-primary: #f3f4f6;
     --text-muted: #9ca3af;
     --text-dim: #4b5563;
@@ -56,10 +56,10 @@
   border-radius: 9999px;
 }
 
-/* Custom Telemetry Grid Background */
+/* Custom F1 Telemetry Grid Background */
 .bg-telemetry-grid {
-  background-image: linear-gradient(to right, rgba(38, 44, 61, 0.3) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(38, 44, 61, 0.3) 1px, transparent 1px);
+  background-image: linear-gradient(to right, rgba(38, 38, 48, 0.3) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(38, 38, 48, 0.3) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
@@ -68,21 +68,21 @@
   border: 1px solid var(--border-color);
 }
 
-/* Custom Scrollbar for Telemetry Displays */
+/* Custom Scrollbar for F1 Telemetry Displays */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #090a0f;
+  background: #08080a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #262c3d;
+  background: #262630;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #00e599;
+  background: #e10600;
 }

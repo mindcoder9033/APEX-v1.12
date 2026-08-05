@@ -9,11 +9,11 @@ export const Header: React.FC = () => {
   const isActive = (path: string) => location.pathname === path
 
   return (
-    <header className="bg-[#12151E] border-b border-[#262C3D] sticky top-0 z-50">
+    <header className="bg-[#121216] border-b border-[#262630] sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand */}
         <Link to="/" className="flex items-center gap-3 group shrink-0">
-          <div className="w-9 h-9 bg-[#00E599] text-[#090A0F] rounded flex items-center justify-center font-bold text-xl shadow-[0_0_12px_rgba(0,229,153,0.3)] transition-transform group-hover:scale-105">
+          <div className="w-9 h-9 bg-[#E10600] text-white rounded-md flex items-center justify-center font-bold text-xl shadow-[0_0_14px_rgba(225,6,0,0.4)] transition-transform group-hover:scale-105">
             A
           </div>
           <div>
@@ -30,22 +30,22 @@ export const Header: React.FC = () => {
         <nav className="flex items-center gap-1 sm:gap-2">
           <Link
             to="/dashboard"
-            className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
               isActive('/dashboard')
-                ? 'bg-[#1A1E2B] text-[#00E599] border border-[#00E599]/30 font-semibold'
-                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1E2B]'
+                ? 'bg-[#1A1A20] text-[#E10600] border border-[#E10600]/30 font-semibold'
+                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
             }`}
           >
-            <LayoutDashboard className="w-4 h-4 text-[#00E599]" />
+            <LayoutDashboard className="w-4 h-4 text-[#E10600]" />
             <span>Dashboard</span>
           </Link>
 
           <Link
             to="/"
-            className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
               isActive('/')
-                ? 'bg-[#1A1E2B] text-[#00E599] border border-[#00E599]/30 font-semibold'
-                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1E2B]'
+                ? 'bg-[#1A1A20] text-[#E10600] border border-[#E10600]/30 font-semibold'
+                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
             }`}
           >
             <Gauge className="w-4 h-4" />
@@ -54,10 +54,10 @@ export const Header: React.FC = () => {
 
           <Link
             to="/curriculum"
-            className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
               isActive('/curriculum')
-                ? 'bg-[#1A1E2B] text-[#00E599] border border-[#00E599]/30 font-semibold'
-                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1E2B]'
+                ? 'bg-[#1A1A20] text-[#E10600] border border-[#E10600]/30 font-semibold'
+                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
             }`}
           >
             <Compass className="w-4 h-4" />
@@ -66,10 +66,10 @@ export const Header: React.FC = () => {
 
           <Link
             to="/profile"
-            className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
               isActive('/profile')
-                ? 'bg-[#1A1E2B] text-[#00E599] border border-[#00E599]/30 font-semibold'
-                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1E2B]'
+                ? 'bg-[#1A1A20] text-[#E10600] border border-[#E10600]/30 font-semibold'
+                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
             }`}
           >
             <UserCheck className="w-4 h-4" />
