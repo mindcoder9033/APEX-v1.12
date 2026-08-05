@@ -1,34 +1,89 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Header } from './Header'
+import { Sidebar } from './Sidebar'
 
 interface AcademyLayoutProps {
   children: React.ReactNode
 }
 
+const SIDEBAR_STORAGE_KEY = 'apex_sidebar_collapsed'
+
 export const AcademyLayout: React.FC<AcademyLayoutProps> = ({ children }) => {
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(() => {
+    const saved = localStorage.getItem(SIDEBAR_STORAGE_KEY)
+    return saved !== null ? JSON.parse(saved) : false
+  })
+
+  const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false)
+
+  useEffect(() => {
+    localStorage.setItem(SIDEBAR_STORAGE_KEY, JSON.stringify(isCollapsed))
+  }, [isCollapsed])
+
+  const handleToggleCollapse = () => {
+    setIsCollapsed((prev) => !prev)
+  }
+
+  const handleToggleMobileSidebar = () => {
+    setIsMobileOpen((prev) => !prev)
+  }
+
+  const handleCloseMobile = () => {
+    setIsMobileOpen(false)
+  }
+
   return (
     <div className="min-h-screen bg-[#08080A] text-[#F3F4F6] flex flex-col bg-telemetry-grid">
-      <Header />
-      
-      {/* Academy Principles Ticker */}
-      <div className="bg-[#121216]/90 border-b border-[#262630] py-1.5 px-4 text-center font-mono text-xs text-[#9CA3AF] flex items-center justify-center gap-4">
-        <span><strong className="text-[#E10600]">APEX RULE:</strong> Mastery Before Progression</span>
-        <span className="hidden sm:inline text-[#262630]">|</span>
-        <span className="hidden sm:inline"><strong className="text-[#3B82F6]">HARDWARE:</strong> Moza R3 Wheel</span>
-        <span className="hidden md:inline text-[#262630]">|</span>
-        <span className="hidden md:inline"><strong className="text-[#FFB800]">SIMULATOR:</strong> Forza Motorsport (2023)</span>
-      </div>
+      {/* Sidebar Navigation */}
+      <Sidebar
+        isCollapsed={isCollapsed}
+        onToggleCollapse={handleToggleCollapse}
+        isMobileOpen={isMobileOpen}
+        onCloseMobile={handleCloseMobile}
+      />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {children}
-      </main>
+      {/* Main Content Area (Offset by sidebar width on desktop) */}
+      <div
+        className={`
+          flex-1 flex flex-col transition-all duration-300 ease-in-out
+          lg:${isCollapsed ? 'pl-16' : 'pl-64'}
+        `}
+      >
+        <Header
+          onToggleMobileSidebar={handleToggleMobileSidebar}
+          isSidebarCollapsed={isCollapsed}
+        />
 
-      <footer className="bg-[#121216] border-t border-[#262630] py-6 text-center text-xs font-mono text-[#9CA3AF]">
-        <div className="max-w-7xl mx-auto px-4 space-y-2">
-          <p>APEX Sim Racing Academy • F1 Red Telemetry Edition • Non-Gamified Objective Driver Development</p>
-          <p className="text-[11px] text-gray-500">"Consistency before speed. Slow is smooth, smooth is fast."</p>
+        {/* Academy Principles Ticker */}
+        <div className="bg-[#121216]/90 border-b border-[#262630] py-1.5 px-4 text-center font-mono text-xs text-[#9CA3AF] flex items-center justify-center gap-4">
+          <span>
+            <strong className="text-[#E10600]">APEX RULE:</strong> Mastery Before Progression
+          </span>
+          <span className="hidden sm:inline text-[#262630]">|</span>
+          <span className="hidden sm:inline">
+            <strong className="text-[#3B82F6]">HARDWARE:</strong> Moza R3 Wheel
+          </span>
+          <span className="hidden md:inline text-[#262630]">|</span>
+          <span className="hidden md:inline">
+            <strong className="text-[#FFB800]">SIMULATOR:</strong> Forza Motorsport (2023)
+          </span>
         </div>
-      </footer>
+
+        {/* Page Main Content Stream */}
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {children}
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-[#121216] border-t border-[#262630] py-6 text-center text-xs font-mono text-[#9CA3AF]">
+          <div className="max-w-7xl mx-auto px-4 space-y-2">
+            <p>APEX Sim Racing Academy • F1 Red Telemetry Edition • Non-Gamified Objective Driver Development</p>
+            <p className="text-[11px] text-gray-500 font-sans">
+              "Consistency before speed. Slow is smooth, smooth is fast."
+            </p>
+          </div>
+        </footer>
+      </div>
     </div>
   )
 }

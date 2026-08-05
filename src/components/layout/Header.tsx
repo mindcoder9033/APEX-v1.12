@@ -1,84 +1,57 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { Gauge, Compass, UserCheck, LayoutDashboard } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Menu } from 'lucide-react'
 import { UserMenu } from './UserMenu'
 
-export const Header: React.FC = () => {
-  const location = useLocation()
+interface HeaderProps {
+  onToggleMobileSidebar?: () => void
+  isSidebarCollapsed?: boolean
+}
 
-  const isActive = (path: string) => location.pathname === path
-
+export const Header: React.FC<HeaderProps> = ({
+  onToggleMobileSidebar
+}) => {
   return (
-    <header className="bg-[#121216] border-b border-[#262630] sticky top-0 z-50">
+    <header className="bg-[#121216] border-b border-[#262630] sticky top-0 z-30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-        {/* Brand */}
-        <Link to="/" className="flex items-center gap-3 group shrink-0">
-          <div className="w-9 h-9 bg-[#E10600] text-white rounded-md flex items-center justify-center font-bold text-xl shadow-[0_0_14px_rgba(225,6,0,0.4)] transition-transform group-hover:scale-105">
-            A
-          </div>
-          <div>
-            <span className="font-bold text-lg text-[#F3F4F6] tracking-wider block leading-tight font-sans">
-              APEX
+        {/* Left Side: Mobile Hamburger & Brand Logo */}
+        <div className="flex items-center gap-3">
+          {/* Mobile Sidebar Hamburger Toggle */}
+          <button
+            onClick={onToggleMobileSidebar}
+            className="p-2 rounded-md text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20] lg:hidden transition-colors"
+            aria-label="Toggle Navigation Menu"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+
+          {/* Brand Logo (Visible on mobile or when desktop sidebar is collapsed) */}
+          <Link to="/" className="flex items-center gap-3 group shrink-0 lg:hidden">
+            <div className="w-8 h-8 bg-[#E10600] text-white rounded-md flex items-center justify-center font-bold text-lg shadow-[0_0_12px_rgba(225,6,0,0.4)] transition-transform group-hover:scale-105">
+              A
+            </div>
+            <div>
+              <span className="font-bold text-base text-[#F3F4F6] tracking-wider block leading-tight font-sans">
+                APEX
+              </span>
+              <span className="text-[9px] font-mono uppercase tracking-widest text-[#9CA3AF] block leading-none">
+                Sim Racing Academy
+              </span>
+            </div>
+          </Link>
+
+          {/* Top Bar Telemetry Badge (Desktop) */}
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#181820] border border-[#262630] rounded-full text-xs font-mono text-[#9CA3AF]">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E10600] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E10600]"></span>
             </span>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#9CA3AF] block leading-none">
-              Sim Racing Academy
-            </span>
+            <span className="text-[#F3F4F6] font-medium">LIVE SESSION LOGGING</span>
           </div>
-        </Link>
+        </div>
 
-        {/* Navigation */}
-        <nav className="flex items-center gap-1 sm:gap-2">
-          <Link
-            to="/dashboard"
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
-              isActive('/dashboard')
-                ? 'bg-[#1A1A20] text-[#E10600] border border-[#E10600]/30 font-semibold'
-                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
-            }`}
-          >
-            <LayoutDashboard className="w-4 h-4 text-[#E10600]" />
-            <span>Dashboard</span>
-          </Link>
-
-          <Link
-            to="/"
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
-              isActive('/')
-                ? 'bg-[#1A1A20] text-[#E10600] border border-[#E10600]/30 font-semibold'
-                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
-            }`}
-          >
-            <Gauge className="w-4 h-4" />
-            <span className="hidden sm:inline">Academy Gate</span>
-          </Link>
-
-          <Link
-            to="/curriculum"
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
-              isActive('/curriculum')
-                ? 'bg-[#1A1A20] text-[#E10600] border border-[#E10600]/30 font-semibold'
-                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
-            }`}
-          >
-            <Compass className="w-4 h-4" />
-            <span>Curriculum</span>
-          </Link>
-
-          <Link
-            to="/profile"
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono transition-colors ${
-              isActive('/profile')
-                ? 'bg-[#1A1A20] text-[#E10600] border border-[#E10600]/30 font-semibold'
-                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
-            }`}
-          >
-            <UserCheck className="w-4 h-4" />
-            <span>Driver Passport</span>
-          </Link>
-        </nav>
-
-        {/* User Menu / Authentication Actions */}
-        <div className="flex items-center">
+        {/* Right Side: User Menu & Quick Controls */}
+        <div className="flex items-center gap-3">
           <UserMenu />
         </div>
       </div>
