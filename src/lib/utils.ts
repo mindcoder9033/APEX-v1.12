@@ -1,0 +1,17 @@
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+export function formatTime(seconds: number): string {
+  const mins = Math.floor(seconds / 60)
+  const secs = (seconds % 60).toFixed(3)
+  const paddedSecs = parseFloat(secs) < 10 ? `0${secs}` : secs
+  return `${mins}:${paddedSecs}`
+}
+
+export function formatPercent(value: number): string {
+  return `${(value * 100).toFixed(1)}%`
+}
