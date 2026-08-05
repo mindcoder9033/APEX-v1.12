@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Gauge, Compass, UserCheck, Shield } from 'lucide-react'
+import { Gauge, Compass, UserCheck } from 'lucide-react'
+import { UserMenu } from './UserMenu'
 
 export const Header: React.FC = () => {
   const location = useLocation()
@@ -9,9 +10,9 @@ export const Header: React.FC = () => {
 
   return (
     <header className="bg-[#12151E] border-b border-[#262C3D] sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand */}
-        <Link to="/" className="flex items-center gap-3 group">
+        <Link to="/" className="flex items-center gap-3 group shrink-0">
           <div className="w-9 h-9 bg-[#00E599] text-[#090A0F] rounded flex items-center justify-center font-bold text-xl shadow-[0_0_12px_rgba(0,229,153,0.3)] transition-transform group-hover:scale-105">
             A
           </div>
@@ -48,7 +49,7 @@ export const Header: React.FC = () => {
             }`}
           >
             <Compass className="w-4 h-4" />
-            <span>Level 1 Curriculum</span>
+            <span>Curriculum</span>
           </Link>
 
           <Link
@@ -64,11 +65,9 @@ export const Header: React.FC = () => {
           </Link>
         </nav>
 
-        {/* Status Badge */}
-        <div className="hidden md:flex items-center gap-2 text-xs font-mono bg-[#1A1E2B] px-3 py-1 rounded border border-[#262C3D]">
-          <Shield className="w-3.5 h-3.5 text-[#00E599]" />
-          <span className="text-[#9CA3AF]">Hardware:</span>
-          <span className="text-[#F3F4F6] font-semibold">Moza R3</span>
+        {/* User Menu / Authentication Actions */}
+        <div className="flex items-center">
+          <UserMenu />
         </div>
       </div>
     </header>
