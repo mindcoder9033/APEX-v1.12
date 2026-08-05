@@ -27,9 +27,14 @@ export const Home: React.FC = () => {
           </p>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
+            <Link to="/dashboard">
+              <Button size="lg" className="gap-2 shadow-[0_0_15px_rgba(0,229,153,0.3)]">
+                Open Academy Dashboard <ArrowRight className="w-5 h-5" />
+              </Button>
+            </Link>
             <Link to="/curriculum">
-              <Button size="lg" className="gap-2">
-                Enter Level 1 Academy <ArrowRight className="w-5 h-5" />
+              <Button variant="telemetry" size="lg">
+                Explore Curriculum
               </Button>
             </Link>
             <Link to="/profile">

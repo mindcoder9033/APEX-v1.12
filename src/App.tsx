@@ -5,6 +5,7 @@ import { CurriculumProvider } from './context/CurriculumContext'
 import { AcademyLayout } from './components/layout/AcademyLayout'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { Home } from './pages/Home'
+import { Dashboard } from './pages/Dashboard'
 import { CurriculumOverview } from './pages/CurriculumOverview'
 import { SessionPlayer } from './pages/SessionPlayer'
 import { DriverProfile } from './pages/DriverProfile'
@@ -26,6 +27,7 @@ export const App: React.FC = () => {
                 <AcademyLayout>
                   <Routes>
                     <Route path="/" element={<Home />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/curriculum" element={<CurriculumOverview />} />
                     <Route
                       path="/profile"

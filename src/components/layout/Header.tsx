@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Gauge, Compass, UserCheck } from 'lucide-react'
+import { Gauge, Compass, UserCheck, LayoutDashboard } from 'lucide-react'
 import { UserMenu } from './UserMenu'
 
 export const Header: React.FC = () => {
@@ -28,6 +28,18 @@ export const Header: React.FC = () => {
 
         {/* Navigation */}
         <nav className="flex items-center gap-1 sm:gap-2">
+          <Link
+            to="/dashboard"
+            className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+              isActive('/dashboard')
+                ? 'bg-[#1A1E2B] text-[#00E599] border border-[#00E599]/30 font-semibold'
+                : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1E2B]'
+            }`}
+          >
+            <LayoutDashboard className="w-4 h-4 text-[#00E599]" />
+            <span>Dashboard</span>
+          </Link>
+
           <Link
             to="/"
             className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-mono transition-colors ${
