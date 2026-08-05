@@ -24,7 +24,7 @@ export const TheorySection: React.FC<TheorySectionProps> = ({ step, extraDetails
           <span className="ml-auto text-xs font-mono text-[#9CA3AF]">APEX Telemetry Physics</span>
         </div>
 
-        <div className="prose prose-invert max-w-none text-sm text-[#F3F4F6] space-y-4 leading-relaxed">
+        <div className="prose prose-invert max-w-none font-learning text-sm text-[#F3F4F6] space-y-4 leading-relaxed">
           {theoryContent.split('\n\n').map((paragraph, idx) => (
             <p key={idx}>{paragraph}</p>
           ))}
