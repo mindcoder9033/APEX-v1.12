@@ -36,7 +36,7 @@ export const PasswordReset: React.FC = () => {
   return (
     <div className="max-w-md mx-auto py-12 space-y-6 font-mono">
       <div className="text-center space-y-2">
-        <div className="w-12 h-12 bg-[#00E599]/10 border border-[#00E599] text-[#00E599] rounded-xl flex items-center justify-center mx-auto">
+        <div className="w-12 h-12 bg-[#E10600]/10 border border-[#E10600] text-[#E10600] rounded-xl flex items-center justify-center mx-auto">
           <KeyRound className="w-6 h-6" />
         </div>
         <h1 className="text-2xl font-bold text-[#F3F4F6]">Reset Driver Password</h1>
@@ -47,14 +47,14 @@ export const PasswordReset: React.FC = () => {
 
       <Card className="space-y-4">
         {error && (
-          <div className="p-3 bg-[#FF3B30]/10 border border-[#FF3B30] text-[#FF3B30] rounded text-xs flex items-center gap-2">
+          <div className="p-3 bg-[#FFB800]/10 border border-[#FFB800] text-[#FFB800] rounded-lg text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
         {success && (
-          <div className="p-3 bg-[#00E599]/10 border border-[#00E599] text-[#00E599] rounded text-xs flex items-center gap-2">
+          <div className="p-3 bg-[#E10600]/10 border border-[#E10600] text-[#E10600] rounded-lg text-xs flex items-center gap-2 font-semibold">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>{success}</span>
           </div>
@@ -67,7 +67,7 @@ export const PasswordReset: React.FC = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-[#1A1E2B] border border-[#262C3D] focus:border-[#00E599] rounded px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
+              className="w-full bg-[#1A1A20] border border-[#262630] focus:border-[#E10600] rounded-md px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
               placeholder="driver@apex-academy.sim"
               required
             />
@@ -78,10 +78,10 @@ export const PasswordReset: React.FC = () => {
           </Button>
         </form>
 
-        <div className="pt-2 border-t border-[#262C3D] text-center">
+        <div className="pt-2 border-t border-[#262630] text-center">
           <Link
             to="/login"
-            className="text-xs text-[#9CA3AF] hover:text-[#00E599] inline-flex items-center gap-1.5 transition-colors"
+            className="text-xs text-[#9CA3AF] hover:text-[#E10600] inline-flex items-center gap-1.5 transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> Return to Driver Login
           </Link>

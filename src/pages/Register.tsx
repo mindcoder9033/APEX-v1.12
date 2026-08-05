@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
-import { UserPlus, HardDrive, AlertCircle, ArrowRight } from 'lucide-react'
+import { UserPlus, AlertCircle, ArrowRight, HardDrive } from 'lucide-react'
 
 export const Register: React.FC = () => {
   const { register } = useAuth()
@@ -16,7 +16,6 @@ export const Register: React.FC = () => {
   const [wheelBase, setWheelBase] = useState('Moza R3 Direct Drive')
   const [pedalSet, setPedalSet] = useState('Moza SR-P Lite Pedals')
   const [platform, setPlatform] = useState('Forza Motorsport (2023)')
-
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -30,22 +29,30 @@ export const Register: React.FC = () => {
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters long.')
+      setError('Password must be at least 6 characters.')
       return
     }
 
     setIsSubmitting(true)
-    const res = await register(email.trim(), password, driverName.trim(), gamertag.trim(), {
-      wheelBase,
-      pedalSet,
-      platform,
-    })
+
+    const res = await register(
+      email.trim(),
+      password,
+      driverName.trim(),
+      gamertag.trim() || undefined,
+      {
+        wheelBase,
+        pedalSet,
+        platform,
+      }
+    )
+
     setIsSubmitting(false)
 
     if (res.error) {
       setError(res.error)
     } else {
-      navigate('/profile')
+      navigate('/profile', { replace: true })
     }
   }
 
@@ -53,7 +60,7 @@ export const Register: React.FC = () => {
     <div className="max-w-lg mx-auto py-10 space-y-6">
       {/* Title */}
       <div className="text-center space-y-2">
-        <div className="w-12 h-12 bg-[#00E599]/10 border border-[#00E599] text-[#00E599] rounded-xl flex items-center justify-center mx-auto">
+        <div className="w-12 h-12 bg-[#E10600]/10 border border-[#E10600] text-[#E10600] rounded-xl flex items-center justify-center mx-auto">
           <UserPlus className="w-6 h-6" />
         </div>
         <h1 className="text-2xl font-bold text-[#F3F4F6]">Academy Driver Enrolment</h1>
@@ -64,7 +71,7 @@ export const Register: React.FC = () => {
 
       <Card className="space-y-6">
         {error && (
-          <div className="p-3 bg-[#FF3B30]/10 border border-[#FF3B30] text-[#FF3B30] rounded font-mono text-xs flex items-center gap-2">
+          <div className="p-3 bg-[#FFB800]/10 border border-[#FFB800] text-[#FFB800] rounded-lg font-mono text-xs flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -73,19 +80,19 @@ export const Register: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-4 font-mono">
           {/* Driver Account Section */}
           <div className="space-y-3">
-            <h3 className="text-xs font-bold uppercase text-[#00E599] border-b border-[#262C3D] pb-1">
+            <h3 className="text-xs font-bold uppercase text-[#E10600] border-b border-[#262630] pb-1">
               1. Account Identity
             </h3>
 
             <div className="space-y-1.5">
               <label className="block text-xs uppercase text-[#9CA3AF]">
-                Driver Name <span className="text-[#00E599]">*</span>
+                Driver Name <span className="text-[#E10600]">*</span>
               </label>
               <input
                 type="text"
                 value={driverName}
                 onChange={(e) => setDriverName(e.target.value)}
-                className="w-full bg-[#1A1E2B] border border-[#262C3D] focus:border-[#00E599] rounded px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
+                className="w-full bg-[#1A1A20] border border-[#262630] focus:border-[#E10600] rounded-md px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
                 placeholder="e.g. Alex Vance"
                 required
               />
@@ -94,13 +101,13 @@ export const Register: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <label className="block text-xs uppercase text-[#9CA3AF]">
-                  Email <span className="text-[#00E599]">*</span>
+                  Email <span className="text-[#E10600]">*</span>
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-[#1A1E2B] border border-[#262C3D] focus:border-[#00E599] rounded px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
+                  className="w-full bg-[#1A1A20] border border-[#262630] focus:border-[#E10600] rounded-md px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
                   placeholder="driver@domain.com"
                   required
                 />
@@ -114,7 +121,7 @@ export const Register: React.FC = () => {
                   type="text"
                   value={gamertag}
                   onChange={(e) => setGamertag(e.target.value)}
-                  className="w-full bg-[#1A1E2B] border border-[#262C3D] focus:border-[#00E599] rounded px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
+                  className="w-full bg-[#1A1A20] border border-[#262630] focus:border-[#E10600] rounded-md px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
                   placeholder="e.g. ApexCadet"
                 />
               </div>
@@ -122,13 +129,13 @@ export const Register: React.FC = () => {
 
             <div className="space-y-1.5">
               <label className="block text-xs uppercase text-[#9CA3AF]">
-                Password <span className="text-[#00E599]">*</span>
+                Password <span className="text-[#E10600]">*</span>
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[#1A1E2B] border border-[#262C3D] focus:border-[#00E599] rounded px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
+                className="w-full bg-[#1A1A20] border border-[#262630] focus:border-[#E10600] rounded-md px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
                 placeholder="Minimum 6 characters"
                 required
               />
@@ -137,7 +144,7 @@ export const Register: React.FC = () => {
 
           {/* Hardware Configuration Section */}
           <div className="space-y-3 pt-2">
-            <h3 className="text-xs font-bold uppercase text-[#3B82F6] border-b border-[#262C3D] pb-1 flex items-center gap-1.5">
+            <h3 className="text-xs font-bold uppercase text-[#3B82F6] border-b border-[#262630] pb-1 flex items-center gap-1.5">
               <HardDrive className="w-3.5 h-3.5" /> 2. Sim Rig Specification
             </h3>
 
@@ -146,7 +153,7 @@ export const Register: React.FC = () => {
               <select
                 value={wheelBase}
                 onChange={(e) => setWheelBase(e.target.value)}
-                className="w-full bg-[#1A1E2B] border border-[#262C3D] focus:border-[#00E599] rounded px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
+                className="w-full bg-[#1A1A20] border border-[#262630] focus:border-[#E10600] rounded-md px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
               >
                 <option value="Moza R3 Direct Drive">Moza R3 Direct Drive (Recommended standard)</option>
                 <option value="Moza R5 Direct Drive">Moza R5 Direct Drive</option>
@@ -161,7 +168,7 @@ export const Register: React.FC = () => {
                 <select
                   value={pedalSet}
                   onChange={(e) => setPedalSet(e.target.value)}
-                  className="w-full bg-[#1A1E2B] border border-[#262C3D] focus:border-[#00E599] rounded px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
+                  className="w-full bg-[#1A1A20] border border-[#262630] focus:border-[#E10600] rounded-md px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
                 >
                   <option value="Moza SR-P Lite Pedals">Moza SR-P Lite Pedals</option>
                   <option value="Moza SR-P Load Cell">Moza SR-P Load Cell</option>
@@ -174,7 +181,7 @@ export const Register: React.FC = () => {
                 <select
                   value={platform}
                   onChange={(e) => setPlatform(e.target.value)}
-                  className="w-full bg-[#1A1E2B] border border-[#262C3D] focus:border-[#00E599] rounded px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
+                  className="w-full bg-[#1A1A20] border border-[#262630] focus:border-[#E10600] rounded-md px-3 py-2 text-sm text-[#F3F4F6] outline-none transition-colors"
                 >
                   <option value="Forza Motorsport (2023)">Forza Motorsport (2023)</option>
                   <option value="Assetto Corsa Competizione">Assetto Corsa Competizione</option>
@@ -198,7 +205,7 @@ export const Register: React.FC = () => {
 
       <div className="text-center text-xs font-mono text-[#9CA3AF]">
         Already enrolled?{' '}
-        <Link to="/login" className="text-[#00E599] font-bold hover:underline">
+        <Link to="/login" className="text-[#E10600] font-bold hover:underline">
           Sign In
         </Link>
       </div>
