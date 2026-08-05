@@ -2,6 +2,29 @@ export type DriverLevel = 'BEGINNER' | 'INTERMEDIATE' | 'EXPERT'
 
 export type StepType = 'LESSON' | 'DRILL' | 'ASSESSMENT'
 
+export interface TrainingPrescription {
+  track: string
+  trackLayout: string
+  car: string
+  carSetup: string
+  transmission: string
+  camera: string
+  assists: {
+    abs: string
+    tc: string
+    stm: string
+    line: string
+  }
+  weather: string
+  timeOfDay: string
+  fuel: string
+  mozaWheelSettings?: {
+    ffbGain: string
+    wheelRotation: string
+    pedalDamping: string
+  }
+}
+
 export interface Step {
   id: string
   stepNumber: number
@@ -14,6 +37,13 @@ export interface Step {
     metric: string
     targetValue: string
   }
+  theoryText?: string
+  coachNotes?: string[]
+  visualContentUrl?: string
+  visualCaption?: string
+  learningObjectives?: string[]
+  prescription?: TrainingPrescription
+  reflectionPrompt?: string
   isCompleted?: boolean
   isLocked?: boolean
 }
@@ -27,6 +57,10 @@ export interface Session {
   track: string
   estimatedMinutes: number
   steps: Step[]
+  overviewText?: string
+  theoryText?: string
+  coachNotes?: string[]
+  prescription?: TrainingPrescription
   isCompleted?: boolean
   isLocked?: boolean
 }
@@ -73,4 +107,13 @@ export interface LevelProgressSummary {
   isUnlocked: boolean
   isCompleted: boolean
 }
+
+export interface SessionStepProgress {
+  sessionId: string
+  currentStepIndex: number
+  reflections: Record<string, string> // stepId -> reflection text
+  confidenceRating?: number // 1 to 5 scale
+  lastSavedAt: string
+}
+
 

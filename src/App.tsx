@@ -6,6 +6,7 @@ import { AcademyLayout } from './components/layout/AcademyLayout'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { Home } from './pages/Home'
 import { CurriculumOverview } from './pages/CurriculumOverview'
+import { SessionPlayer } from './pages/SessionPlayer'
 import { DriverProfile } from './pages/DriverProfile'
 import { Login } from './pages/Login'
 import { Register } from './pages/Register'
@@ -17,24 +18,32 @@ export const App: React.FC = () => {
     <AuthProvider>
       <CurriculumProvider>
         <Router>
-          <AcademyLayout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/curriculum" element={<CurriculumOverview />} />
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute>
-                    <DriverProfile />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<PasswordReset />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AcademyLayout>
+          <Routes>
+            <Route path="/session/:sessionId" element={<SessionPlayer />} />
+            <Route
+              path="*"
+              element={
+                <AcademyLayout>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/curriculum" element={<CurriculumOverview />} />
+                    <Route
+                      path="/profile"
+                      element={
+                        <ProtectedRoute>
+                          <DriverProfile />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/forgot-password" element={<PasswordReset />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </AcademyLayout>
+              }
+            />
+          </Routes>
         </Router>
       </CurriculumProvider>
     </AuthProvider>
@@ -42,3 +51,4 @@ export const App: React.FC = () => {
 }
 
 export default App
+

@@ -1,10 +1,11 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Session, Module } from '../../types/curriculum'
 import { useCurriculum } from '../../context/CurriculumContext'
 import { isSessionUnlocked, isSessionCompleted, isStepCompleted } from '../../lib/curriculumEngine'
 import { Card } from '../ui/Card'
 import { Badge } from '../ui/Badge'
-import { Lock, Target, Play, Flag, CheckCircle2, Clock, Car, MapPin } from 'lucide-react'
+import { Lock, Target, Play, Flag, CheckCircle2, Clock, Car, MapPin, PlayCircle } from 'lucide-react'
 
 interface SessionCardProps {
   session: Session
@@ -12,6 +13,7 @@ interface SessionCardProps {
 }
 
 export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => {
+  const navigate = useNavigate()
   const {
     activeLevel,
     activeSessionId,
@@ -24,6 +26,13 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
   const unlocked = isSessionUnlocked(session, module, activeLevel, progressMap, devUnlockMode)
   const sessionPassed = isSessionCompleted(session, progressMap)
   const isSelected = activeSessionId === session.id
+
+  const handleLaunchPlayer = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (unlocked) {
+      navigate(`/session/${session.id}`)
+    }
+  }
 
   return (
     <Card
@@ -59,6 +68,15 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
         </div>
 
         <div className="flex items-center gap-2">
+          {unlocked && (
+            <button
+              onClick={handleLaunchPlayer}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#00E599] text-[#090A0F] font-mono text-xs font-bold hover:bg-[#00FFAB] transition-all shadow-md shadow-[#00E599]/20"
+            >
+              <PlayCircle className="w-4 h-4" />
+              <span>{sessionPassed ? 'Review Session' : 'Start Session'}</span>
+            </button>
+          )}
           <Badge variant="info">
             <Clock className="w-3 h-3 mr-1" />
             {session.estimatedMinutes} Mins Practice
