@@ -38,7 +38,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
     <Card
       accentBorder={isSelected}
       className={`space-y-5 transition-all duration-200 ${
-        !unlocked ? 'opacity-60 bg-[#12151E]/40 border-[#262C3D]' : 'bg-[#12151E]'
+        !unlocked ? 'opacity-60 bg-[#121216]/40 border-[#262630]' : 'bg-[#121216]'
       }`}
       onClick={() => {
         if (unlocked) {
@@ -50,7 +50,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono text-[#00E599] font-bold">
+            <span className="text-xs font-mono text-[#E10600] font-bold">
               Session 0{module.moduleNumber}.0{session.sessionNumber}
             </span>
             {!unlocked && (
@@ -71,7 +71,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
           {unlocked && (
             <button
               onClick={handleLaunchPlayer}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#00E599] text-[#090A0F] font-mono text-xs font-bold hover:bg-[#00FFAB] transition-all shadow-md shadow-[#00E599]/20"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#E10600] text-white font-mono text-xs font-bold hover:bg-[#FF1E19] transition-all shadow-md shadow-[#E10600]/30"
             >
               <PlayCircle className="w-4 h-4" />
               <span>{sessionPassed ? 'Review Session' : 'Start Session'}</span>
@@ -84,16 +84,16 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
         </div>
       </div>
 
-      <p className="text-sm text-[#9CA3AF] leading-relaxed">{session.description}</p>
+      <p className="text-sm text-[#9CA3AF] font-learning leading-relaxed">{session.description}</p>
 
       {/* Setup Config Hardware / Car / Track */}
-      <div className="flex flex-wrap items-center gap-4 text-xs font-mono p-3 bg-[#1A1E2B] rounded-lg border border-[#262C3D]">
+      <div className="flex flex-wrap items-center gap-4 text-xs font-mono p-3 bg-[#1A1A20] rounded-lg border border-[#262630]">
         <div className="flex items-center gap-1.5 text-[#F3F4F6]">
           <Car className="w-4 h-4 text-[#3B82F6]" />
           <span>Vehicle: {session.car}</span>
         </div>
         <div className="flex items-center gap-1.5 text-[#F3F4F6]">
-          <MapPin className="w-4 h-4 text-[#00E599]" />
+          <MapPin className="w-4 h-4 text-[#E10600]" />
           <span>Circuit: {session.track}</span>
         </div>
       </div>
@@ -113,8 +113,8 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
                 key={step.id}
                 className={`p-4 rounded-lg border transition-all duration-200 ${
                   stepPassed
-                    ? 'bg-[#12151E] border-[#00E599]/40'
-                    : 'bg-[#1A1E2B] border-[#262C3D]'
+                    ? 'bg-[#121216] border-[#E10600]/40'
+                    : 'bg-[#1A1A20] border-[#262630]'
                 }`}
               >
                 <div className="flex flex-wrap items-center justify-between gap-3">
@@ -124,7 +124,7 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
                         step.type === 'LESSON'
                           ? 'bg-[#3B82F6]/20 text-[#3B82F6]'
                           : step.type === 'DRILL'
-                          ? 'bg-[#00E599]/20 text-[#00E599]'
+                          ? 'bg-[#E10600]/20 text-[#E10600]'
                           : 'bg-[#FFB800]/20 text-[#FFB800]'
                       }`}
                     >
@@ -152,8 +152,8 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
                     disabled={!unlocked}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono font-bold transition-all duration-200 ${
                       stepPassed
-                        ? 'bg-[#00E599] text-[#0B0E14] shadow-[0_0_10px_rgba(0,229,153,0.3)] hover:bg-[#00CC88]'
-                        : 'bg-[#262C3D] text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-gray-600'
+                        ? 'bg-[#E10600] text-white shadow-[0_0_10px_rgba(225,6,0,0.35)] hover:bg-[#FF1E19]'
+                        : 'bg-[#262630] text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-gray-600'
                     }`}
                   >
                     {stepPassed ? (
@@ -166,13 +166,13 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
                   </button>
                 </div>
 
-                <p className="text-xs text-[#9CA3AF] mt-2.5 pl-11">{step.objective}</p>
+                <p className="text-xs text-[#9CA3AF] font-learning mt-2.5 pl-11">{step.objective}</p>
 
                 {/* Instructions & Telemetry Threshold Target */}
                 <div className="mt-3 pl-11 space-y-2">
                   <div className="text-xs text-[#F3F4F6] space-y-1">
                     <span className="text-[11px] font-mono text-[#9CA3AF] block">Instructions:</span>
-                    <ul className="list-disc list-inside space-y-0.5 text-[#9CA3AF]">
+                    <ul className="list-disc list-inside space-y-0.5 text-[#9CA3AF] font-learning">
                       {step.instructions.map((inst, i) => (
                         <li key={i}>{inst}</li>
                       ))}
@@ -180,9 +180,9 @@ export const SessionCard: React.FC<SessionCardProps> = ({ session, module }) => 
                   </div>
 
                   {step.telemetryThreshold && (
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#12151E] border border-[#00E599]/30 text-xs font-mono">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded bg-[#121216] border border-[#E10600]/30 text-xs font-mono">
                       <span className="text-[#9CA3AF]">{step.telemetryThreshold.metric}:</span>
-                      <span className="text-[#00E599] font-bold">
+                      <span className="text-[#E10600] font-bold">
                         Target: {step.telemetryThreshold.targetValue}
                       </span>
                     </div>

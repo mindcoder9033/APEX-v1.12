@@ -50,7 +50,7 @@ export const CurriculumOverview: React.FC = () => {
             <h3 className="text-xs font-mono uppercase tracking-widest text-[#9CA3AF]">
               {activeLevel.title} Modules
             </h3>
-            <span className="text-xs font-mono text-[#00E599]">
+            <span className="text-xs font-mono text-[#E10600]">
               {levelSummary.completedModules} / {levelSummary.totalModules} Mastered
             </span>
           </div>
@@ -65,29 +65,29 @@ export const CurriculumOverview: React.FC = () => {
         {/* Right Main Content: Active Module Sessions */}
         <div className="lg:col-span-2 space-y-6">
           {!levelSummary.isUnlocked && !devUnlockMode ? (
-            <Card className="p-10 text-center space-y-4 bg-[#12151E] border-[#262C3D]">
+            <Card className="p-10 text-center space-y-4 bg-[#121216] border-[#262630]">
               <Lock className="w-14 h-14 text-[#FFB800] mx-auto" />
               <h3 className="text-2xl font-bold text-[#F3F4F6]">Level Locked</h3>
-              <p className="text-sm text-[#9CA3AF] max-w-md mx-auto">
+              <p className="text-sm text-[#9CA3AF] font-learning max-w-md mx-auto">
                 Complete all modules and pass the graduation exam in the previous level to unlock{' '}
                 <strong className="text-[#F3F4F6]">{activeLevel.title}</strong>.
               </p>
               <div className="pt-2">
-                <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[#9CA3AF] bg-[#1A1E2B] px-3 py-1.5 rounded border border-[#262C3D]">
+                <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[#9CA3AF] bg-[#1A1A20] px-3 py-1.5 rounded border border-[#262630]">
                   <ShieldAlert className="w-4 h-4 text-[#FFB800]" />
                   Or enable "Dev Bypass" at the top to preview content.
                 </span>
               </div>
             </Card>
           ) : !activeModule ? (
-            <Card className="p-8 text-center">
+            <Card className="p-8 text-center bg-[#121216] border-[#262630]">
               <p className="text-sm text-[#9CA3AF]">No module selected.</p>
             </Card>
           ) : activeModule.sessions.length === 0 ? (
-            <Card className="p-10 text-center space-y-4 bg-[#12151E] border-[#262C3D]">
+            <Card className="p-10 text-center space-y-4 bg-[#121216] border-[#262630]">
               <Lock className="w-12 h-12 text-[#FFB800] mx-auto" />
               <h3 className="text-xl font-bold text-[#F3F4F6]">Module Content Locked</h3>
-              <p className="text-sm text-[#9CA3AF]">
+              <p className="text-sm text-[#9CA3AF] font-learning">
                 Complete prerequisite module drills to unlock {activeModule.title}.
               </p>
             </Card>
@@ -95,14 +95,14 @@ export const CurriculumOverview: React.FC = () => {
             <>
               {/* Module Mastered Banner & Exam Button */}
               {activeModuleIsCompleted && (
-                <div className="bg-[#12151E] border border-[#00E599]/40 rounded-xl p-4 flex flex-wrap items-center justify-between gap-4 shadow-lg">
+                <div className="bg-[#121216] border border-[#E10600]/40 rounded-xl p-4 flex flex-wrap items-center justify-between gap-4 shadow-lg">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#00E599]/10 border border-[#00E599]/30 flex items-center justify-center text-[#00E599]">
+                    <div className="w-10 h-10 rounded-xl bg-[#E10600]/10 border border-[#E10600]/30 flex items-center justify-center text-[#E10600]">
                       <Award className="w-5 h-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono text-[#00E599] uppercase font-bold flex items-center gap-1">
+                        <span className="text-[10px] font-mono text-[#E10600] uppercase font-bold flex items-center gap-1">
                           <CheckCircle2 className="w-3 h-3" /> Module Sessions Completed
                         </span>
                       </div>
@@ -113,7 +113,7 @@ export const CurriculumOverview: React.FC = () => {
                   </div>
                   <button
                     onClick={() => setExamModalModule(activeModule)}
-                    className="px-4 py-2 rounded-lg bg-[#00E599] text-[#090A0F] hover:bg-[#00FFAB] font-mono text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-[#00E599]/20"
+                    className="px-4 py-2 rounded-lg bg-[#E10600] text-white hover:bg-[#FF1E19] font-mono text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-[#E10600]/30"
                   >
                     <Award className="w-4 h-4" />
                     <span>Take Module Examination</span>

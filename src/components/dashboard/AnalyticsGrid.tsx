@@ -13,7 +13,7 @@ export const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({ metrics }) => {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {/* Practice Hours */}
-      <Card className="bg-[#12151E] border-[#262C3D] space-y-2 p-4">
+      <Card className="bg-[#121216] border-[#262630] space-y-2 p-4">
         <div className="flex items-center justify-between text-[#9CA3AF]">
           <span className="text-xs font-mono uppercase tracking-wider">Practice Time</span>
           <Clock className="w-4 h-4 text-[#3B82F6]" />
@@ -22,27 +22,27 @@ export const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({ metrics }) => {
           <span className="text-2xl font-bold font-mono text-[#F3F4F6]">{hours}</span>
           <span className="text-xs font-mono text-[#9CA3AF]">HRS</span>
         </div>
-        <div className="text-[11px] text-[#9CA3AF]">Total cockpit time logged</div>
+        <div className="text-[11px] font-mono text-[#9CA3AF]">Total cockpit time logged</div>
       </Card>
 
       {/* Completion Rate */}
-      <Card className="bg-[#12151E] border-[#262C3D] space-y-2 p-4">
+      <Card className="bg-[#121216] border-[#262630] space-y-2 p-4">
         <div className="flex items-center justify-between text-[#9CA3AF]">
           <span className="text-xs font-mono uppercase tracking-wider">Completion</span>
-          <CheckSquare className="w-4 h-4 text-[#00E599]" />
+          <CheckSquare className="w-4 h-4 text-[#E10600]" />
         </div>
         <div className="flex items-baseline gap-1.5">
-          <span className="text-2xl font-bold font-mono text-[#00E599]">
+          <span className="text-2xl font-bold font-mono text-[#E10600]">
             {metrics.completionRatePercent}%
           </span>
         </div>
-        <div className="text-[11px] text-[#9CA3AF]">
+        <div className="text-[11px] font-mono text-[#9CA3AF]">
           {metrics.totalSessionsCompleted} sessions completed
         </div>
       </Card>
 
       {/* Mastery Rate */}
-      <Card className="bg-[#12151E] border-[#262C3D] space-y-2 p-4">
+      <Card className="bg-[#121216] border-[#262630] space-y-2 p-4">
         <div className="flex items-center justify-between text-[#9CA3AF]">
           <span className="text-xs font-mono uppercase tracking-wider">Mastery Rate</span>
           <Target className="w-4 h-4 text-[#FFB800]" />
@@ -52,27 +52,28 @@ export const AnalyticsGrid: React.FC<AnalyticsGridProps> = ({ metrics }) => {
             {metrics.masteryRatePercent}%
           </span>
         </div>
-        <div className="text-[11px] text-[#9CA3AF]">
+        <div className="text-[11px] font-mono text-[#9CA3AF]">
           {metrics.totalEvaluatedSessions} sessions evaluated
         </div>
       </Card>
 
       {/* Clean Laps Ratio */}
-      <Card className="bg-[#12151E] border-[#262C3D] space-y-2 p-4">
+      <Card className="bg-[#121216] border-[#262630] space-y-2 p-4">
         <div className="flex items-center justify-between text-[#9CA3AF]">
           <span className="text-xs font-mono uppercase tracking-wider">Consistency</span>
-          <Activity className="w-4 h-4 text-[#00E599]" />
+          <Activity className="w-4 h-4 text-[#3B82F6]" />
         </div>
         <div className="flex items-baseline gap-1.5">
           <span className="text-2xl font-bold font-mono text-[#F3F4F6]">
             {metrics.cleanLapRatioPercent}%
           </span>
-          <span className="text-xs font-mono text-[#9CA3AF]">CLEAN</span>
+          <span className="text-xs font-mono text-[#3B82F6]">CLEAN</span>
         </div>
-        <div className="text-[11px] text-[#9CA3AF]">
+        <div className="text-[11px] font-mono text-[#9CA3AF]">
           Avg Delta: {metrics.avgConsistencyDeltaSeconds}s
         </div>
       </Card>
     </div>
   )
 }
+

@@ -10,10 +10,10 @@ export const AcademyProgressCard: React.FC = () => {
     useCurriculum()
 
   return (
-    <Card className="space-y-4 bg-[#12151E] border-[#262C3D]">
-      <div className="flex items-center justify-between border-b border-[#262C3D] pb-3">
+    <Card className="space-y-4 bg-[#121216] border-[#262630]">
+      <div className="flex items-center justify-between border-b border-[#262630] pb-3">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-[#00E599]" />
+          <ShieldCheck className="w-4 h-4 text-[#E10600]" />
           <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-[#F3F4F6]">
             Academy Progression: {activeLevelName}
           </h3>
@@ -30,28 +30,28 @@ export const AcademyProgressCard: React.FC = () => {
         />
 
         <div className="grid grid-cols-3 gap-3 pt-2 text-center font-mono">
-          <div className="bg-[#1A1E2B] p-2.5 rounded border border-[#262C3D]">
+          <div className="bg-[#1A1A20] p-2.5 rounded border border-[#262630]">
             <div className="text-[10px] text-[#9CA3AF] uppercase">Modules</div>
             <div className="text-base font-bold text-[#F3F4F6] mt-0.5">
               {levelSummary.completedModules} / {levelSummary.totalModules}
             </div>
           </div>
-          <div className="bg-[#1A1E2B] p-2.5 rounded border border-[#262C3D]">
+          <div className="bg-[#1A1A20] p-2.5 rounded border border-[#262630]">
             <div className="text-[10px] text-[#9CA3AF] uppercase">Sessions</div>
             <div className="text-base font-bold text-[#F3F4F6] mt-0.5">
               {levelSummary.completedSessions} / {levelSummary.totalSessions}
             </div>
           </div>
-          <div className="bg-[#1A1E2B] p-2.5 rounded border border-[#262C3D]">
+          <div className="bg-[#1A1A20] p-2.5 rounded border border-[#262630]">
             <div className="text-[10px] text-[#9CA3AF] uppercase">Drill Steps</div>
-            <div className="text-base font-bold text-[#00E599] mt-0.5">
+            <div className="text-base font-bold text-[#E10600] mt-0.5">
               {levelSummary.completedSteps} / {levelSummary.totalSteps}
             </div>
           </div>
         </div>
 
         {/* Developer Override & Reset Toolbar */}
-        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 text-xs border-t border-[#262C3D]/60 font-mono">
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 text-xs border-t border-[#262630]/60 font-mono">
           <button
             onClick={toggleDevUnlockMode}
             className="flex items-center gap-1.5 text-[#9CA3AF] hover:text-[#F3F4F6] transition-colors"

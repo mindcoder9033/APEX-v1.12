@@ -31,20 +31,20 @@ export const UserMenu: React.FC = () => {
       <div className="flex items-center gap-3 font-mono text-xs">
         <button
           onClick={loginAsDemo}
-          className="text-[#9CA3AF] hover:text-[#00E599] transition-colors underline"
+          className="text-[#9CA3AF] hover:text-[#E10600] transition-colors underline"
           title="Instant sandbox demo access"
         >
           Demo Driver
         </button>
         <Link
           to="/login"
-          className="px-3 py-1.5 text-[#F3F4F6] bg-[#12151E] border border-[#262C3D] hover:border-[#00E599] rounded transition-colors"
+          className="px-3 py-1.5 text-[#F3F4F6] bg-[#121216] border border-[#262630] hover:border-[#E10600] rounded transition-colors"
         >
           Sign In
         </Link>
         <Link
           to="/register"
-          className="px-3 py-1.5 bg-[#00E599] text-[#090A0F] font-bold rounded hover:bg-[#00FFAB] transition-colors"
+          className="px-3 py-1.5 bg-[#E10600] text-white font-bold rounded hover:bg-[#FF1E19] transition-colors shadow-md shadow-[#E10600]/30"
         >
           Enrol
         </Link>
@@ -65,9 +65,9 @@ export const UserMenu: React.FC = () => {
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-3 bg-[#12151E] border border-[#262C3D] hover:border-[#00E599] px-3 py-1.5 rounded-lg transition-colors text-left"
+        className="flex items-center gap-3 bg-[#121216] border border-[#262630] hover:border-[#E10600] px-3 py-1.5 rounded-lg transition-colors text-left"
       >
-        <div className="w-8 h-8 rounded bg-[#00E599]/10 border border-[#00E599] text-[#00E599] font-mono font-bold flex items-center justify-center text-xs">
+        <div className="w-8 h-8 rounded bg-[#E10600]/10 border border-[#E10600] text-[#E10600] font-mono font-bold flex items-center justify-center text-xs">
           {initials}
         </div>
         <div className="hidden sm:block">
@@ -82,16 +82,16 @@ export const UserMenu: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-[#12151E] border border-[#262C3D] rounded-xl shadow-2xl z-50 py-2 font-mono text-xs text-[#F3F4F6] animate-in fade-in slide-in-from-top-2">
+        <div className="absolute right-0 mt-2 w-64 bg-[#121216] border border-[#262630] rounded-xl shadow-2xl z-50 py-2 font-mono text-xs text-[#F3F4F6] animate-in fade-in slide-in-from-top-2">
           {/* Header */}
-          <div className="px-4 py-3 border-b border-[#262C3D] space-y-1">
+          <div className="px-4 py-3 border-b border-[#262630] space-y-1">
             <div className="font-bold text-sm text-[#F3F4F6]">{profile?.driverName}</div>
             <div className="text-[11px] text-[#9CA3AF] truncate">{user?.email}</div>
             <div className="pt-1 flex items-center gap-1.5">
               <Badge variant="success" className="text-[10px] py-0.5 px-2">
                 Level 1 Cadet
               </Badge>
-              <span className="text-[10px] text-[#00E599] flex items-center gap-1">
+              <span className="text-[10px] text-[#E10600] flex items-center gap-1">
                 <ShieldCheck className="w-3 h-3" /> Certified Telemetry
               </span>
             </div>
@@ -102,16 +102,16 @@ export const UserMenu: React.FC = () => {
             <Link
               to="/profile"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#1A1E2B] transition-colors"
+              className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#1A1A20] transition-colors"
             >
-              <User className="w-4 h-4 text-[#00E599]" />
+              <User className="w-4 h-4 text-[#E10600]" />
               <span>Driver Profile & Telemetry</span>
             </Link>
 
             <Link
               to="/profile?tab=settings"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#1A1E2B] transition-colors"
+              className="flex items-center gap-2.5 px-4 py-2.5 hover:bg-[#1A1A20] transition-colors"
             >
               <Sliders className="w-4 h-4 text-[#3B82F6]" />
               <span>Academy & UI Settings</span>
@@ -119,7 +119,7 @@ export const UserMenu: React.FC = () => {
           </div>
 
           {/* Hardware setup snippet */}
-          <div className="px-4 py-2.5 bg-[#090A0F]/60 border-t border-b border-[#262C3D] text-[10px] text-[#9CA3AF] space-y-0.5">
+          <div className="px-4 py-2.5 bg-[#08080A]/60 border-t border-b border-[#262630] text-[10px] text-[#9CA3AF] space-y-0.5">
             <span className="block font-bold text-[#F3F4F6] uppercase text-[9px]">
               Hardware Rig
             </span>

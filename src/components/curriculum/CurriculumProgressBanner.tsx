@@ -12,15 +12,15 @@ export const CurriculumProgressBanner: React.FC = () => {
   } = useCurriculum()
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#12151E] via-[#1A1E2B] to-[#12151E] border border-[#262C3D] p-6 lg:p-8 shadow-xl">
+    <div className="relative overflow-hidden rounded-2xl bg-[#121216] border border-[#262630] p-6 lg:p-8 shadow-xl">
       {/* Decorative accent glow */}
-      <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#00E599]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#E10600]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         {/* Left Info Column */}
         <div className="space-y-3 max-w-2xl">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#00E599]/15 text-[#00E599] border border-[#00E599]/30">
+            <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-[#E10600]/15 text-[#E10600] border border-[#E10600]/30">
               {activeLevel.title}
             </span>
             <span className="text-xs font-mono text-[#9CA3AF]">{activeLevel.subtitle}</span>
@@ -30,12 +30,12 @@ export const CurriculumProgressBanner: React.FC = () => {
             {activeLevel.graduateProfile}
           </h1>
 
-          <p className="text-sm text-[#9CA3AF] leading-relaxed">{activeLevel.objective}</p>
+          <p className="text-sm text-[#9CA3AF] font-learning leading-relaxed">{activeLevel.objective}</p>
 
           {/* Level Progress Stats */}
           <div className="pt-2 flex flex-wrap items-center gap-6 text-xs font-mono text-[#9CA3AF]">
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#00E599]" />
+              <CheckCircle2 className="w-4 h-4 text-[#E10600]" />
               <span>
                 Modules:{' '}
                 <strong className="text-[#F3F4F6]">
@@ -58,7 +58,7 @@ export const CurriculumProgressBanner: React.FC = () => {
               <Award className="w-4 h-4 text-[#FFB800]" />
               <span>
                 Overall Mastery:{' '}
-                <strong className="text-[#00E599]">{levelSummary.percentComplete}%</strong>
+                <strong className="text-[#E10600]">{levelSummary.percentComplete}%</strong>
               </span>
             </div>
           </div>
@@ -69,7 +69,7 @@ export const CurriculumProgressBanner: React.FC = () => {
           {/* Main Resume CTA */}
           <button
             onClick={resumeLearning}
-            className="flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl font-mono font-bold text-sm bg-[#00E599] text-[#0B0E14] shadow-[0_0_25px_rgba(0,229,153,0.3)] hover:bg-[#00CC88] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+            className="flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl font-mono font-bold text-sm bg-[#E10600] text-white shadow-[0_0_25px_rgba(225,6,0,0.35)] hover:bg-[#FF1E19] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
           >
             <Play className="w-4 h-4 fill-current" />
             <span>Resume Learning</span>
@@ -78,7 +78,7 @@ export const CurriculumProgressBanner: React.FC = () => {
           {prescribedTarget && (
             <div className="text-right sm:text-right">
               <span className="text-[11px] font-mono text-[#9CA3AF]">Next Prescribed Drill:</span>
-              <p className="text-xs font-mono font-semibold text-[#00E599] truncate max-w-[260px]">
+              <p className="text-xs font-mono font-semibold text-[#E10600] truncate max-w-[260px]">
                 {prescribedTarget.session.title} &bull; {prescribedTarget.step.title}
               </p>
             </div>
@@ -97,9 +97,9 @@ export const CurriculumProgressBanner: React.FC = () => {
       </div>
 
       {/* Progress Line Bar at Bottom */}
-      <div className="mt-6 w-full bg-[#12151E] rounded-full h-2 overflow-hidden border border-[#262C3D]">
+      <div className="mt-6 w-full bg-[#1A1A20] rounded-full h-2 overflow-hidden border border-[#262630]">
         <div
-          className="bg-gradient-to-r from-[#3B82F6] to-[#00E599] h-full transition-all duration-500"
+          className="bg-gradient-to-r from-[#3B82F6] to-[#E10600] h-full transition-all duration-500"
           style={{ width: `${levelSummary.percentComplete}%` }}
         />
       </div>

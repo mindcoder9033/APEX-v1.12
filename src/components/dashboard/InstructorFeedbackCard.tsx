@@ -27,10 +27,10 @@ export const InstructorFeedbackCard: React.FC<InstructorFeedbackCardProps> = ({ 
   }
 
   return (
-    <Card className="space-y-4 bg-[#12151E] border-[#262C3D]">
-      <div className="flex items-center justify-between border-b border-[#262C3D] pb-3">
+    <Card className="space-y-4 bg-[#121216] border-[#262630]">
+      <div className="flex items-center justify-between border-b border-[#262630] pb-3">
         <div className="flex items-center gap-2">
-          <Award className="w-4 h-4 text-[#3B82F6]" />
+          <Award className="w-4 h-4 text-[#E10600]" />
           <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-[#F3F4F6]">
             AI Instructor Feedback
           </h3>
@@ -41,7 +41,7 @@ export const InstructorFeedbackCard: React.FC<InstructorFeedbackCardProps> = ({ 
             {activeRemediationCount} Remediation Required
           </span>
         ) : (
-          <span className="text-xs font-mono text-[#00E599] flex items-center gap-1">
+          <span className="text-xs font-mono text-[#E10600] flex items-center gap-1">
             <CheckCircle className="w-3.5 h-3.5" /> Objective Mastery On Track
           </span>
         )}
@@ -57,10 +57,10 @@ export const InstructorFeedbackCard: React.FC<InstructorFeedbackCardProps> = ({ 
           </div>
 
           {/* Assessment Score & Lap Stats Pill */}
-          <div className="grid grid-cols-3 gap-2 bg-[#1A1E2B] p-2.5 rounded border border-[#262C3D] text-center font-mono">
+          <div className="grid grid-cols-3 gap-2 bg-[#1A1A20] p-2.5 rounded border border-[#262630] text-center font-mono">
             <div>
               <div className="text-[10px] text-[#9CA3AF]">OVERALL SCORE</div>
-              <div className="text-base font-bold text-[#00E599]">
+              <div className="text-base font-bold text-[#E10600]">
                 {latestAssessment.result?.score || 0}%
               </div>
             </div>
@@ -85,7 +85,7 @@ export const InstructorFeedbackCard: React.FC<InstructorFeedbackCardProps> = ({ 
                 <AlertTriangle className="w-4 h-4" />
                 Remediation: {latestAssessment.remediationPlan.title}
               </div>
-              <p className="text-[#9CA3AF]">
+              <p className="text-[#9CA3AF] font-learning">
                 {latestAssessment.remediationPlan.coachAdvice}
               </p>
             </div>
@@ -97,7 +97,7 @@ export const InstructorFeedbackCard: React.FC<InstructorFeedbackCardProps> = ({ 
               <div className="font-mono text-[11px] uppercase tracking-wider text-[#F3F4F6]">
                 Instructor Critique:
               </div>
-              <ul className="space-y-1 list-disc list-inside">
+              <ul className="space-y-1 list-disc list-inside font-learning">
                 {latestAssessment.result.feedback.slice(0, 3).map((fb, idx) => (
                   <li key={idx} className="text-[#9CA3AF]">
                     {fb}
@@ -108,10 +108,10 @@ export const InstructorFeedbackCard: React.FC<InstructorFeedbackCardProps> = ({ 
           )}
         </div>
       ) : (
-        <div className="bg-[#1A1E2B] p-4 rounded border border-[#262C3D] text-center space-y-2">
+        <div className="bg-[#1A1A20] p-4 rounded border border-[#262630] text-center space-y-2">
           <FileText className="w-8 h-8 text-[#9CA3AF] mx-auto opacity-50" />
           <div className="text-xs font-mono text-[#F3F4F6]">No Assessment Telemetry Submitted Yet</div>
-          <p className="text-xs text-[#9CA3AF]">
+          <p className="text-xs text-[#9CA3AF] font-learning">
             Complete a prescribed training session and submit your lap telemetry to receive objective AI coach evaluations.
           </p>
         </div>

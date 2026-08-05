@@ -37,7 +37,7 @@ export const LevelSelector: React.FC = () => {
   return (
     <div className="space-y-4">
       {/* Dev Mode & Level Selection Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-[#262C3D]">
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-[#262630]">
         <div>
           <h2 className="text-xs font-mono uppercase tracking-widest text-[#9CA3AF]">
             Academy Progression Tiers
@@ -53,7 +53,7 @@ export const LevelSelector: React.FC = () => {
           className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs font-mono border transition-all duration-200 ${
             devUnlockMode
               ? 'bg-[#FFB800]/15 text-[#FFB800] border-[#FFB800]'
-              : 'bg-[#1A1E2B] text-[#9CA3AF] border-[#262C3D] hover:text-[#F3F4F6]'
+              : 'bg-[#1A1A20] text-[#9CA3AF] border-[#262630] hover:text-[#F3F4F6]'
           }`}
           title="Toggle developer bypass to test locked modules"
         >
@@ -80,25 +80,25 @@ export const LevelSelector: React.FC = () => {
               disabled={!unlocked}
               className={`relative text-left p-4 rounded-xl border transition-all duration-200 ${
                 isActive
-                  ? 'bg-[#12151E] border-[#00E599] shadow-[0_0_20px_rgba(0,229,153,0.15)] ring-1 ring-[#00E599]'
+                  ? 'bg-[#121216] border-[#E10600] shadow-[0_0_20px_rgba(225,6,0,0.2)] ring-1 ring-[#E10600]'
                   : unlocked
-                  ? 'bg-[#12151E] border-[#262C3D] hover:border-gray-500 hover:bg-[#1A1E2B]'
-                  : 'bg-[#12151E]/40 border-[#262C3D]/50 opacity-60 cursor-not-allowed'
+                  ? 'bg-[#121216] border-[#262630] hover:border-gray-500 hover:bg-[#1A1A20]'
+                  : 'bg-[#121216]/40 border-[#262630]/50 opacity-60 cursor-not-allowed'
               }`}
             >
               <div className="flex items-center justify-between">
                 <span
                   className={`text-xs font-mono font-bold px-2 py-0.5 rounded ${
                     isActive
-                      ? 'bg-[#00E599]/20 text-[#00E599]'
-                      : 'bg-[#1A1E2B] text-[#9CA3AF]'
+                      ? 'bg-[#E10600]/20 text-[#E10600]'
+                      : 'bg-[#1A1A20] text-[#9CA3AF]'
                   }`}
                 >
                   {lvl.badge}
                 </span>
 
                 {summary.isCompleted ? (
-                  <span className="flex items-center gap-1 text-xs font-mono text-[#00E599]">
+                  <span className="flex items-center gap-1 text-xs font-mono text-[#E10600]">
                     <Award className="w-4 h-4" /> Certified
                   </span>
                 ) : unlocked ? (
@@ -113,12 +113,12 @@ export const LevelSelector: React.FC = () => {
               </div>
 
               <h3 className="font-bold text-base text-[#F3F4F6] mt-3">{lvl.label}</h3>
-              <p className="text-xs text-[#9CA3AF] mt-1 line-clamp-2">{lvl.desc}</p>
+              <p className="text-xs text-[#9CA3AF] font-learning mt-1 line-clamp-2">{lvl.desc}</p>
 
               {/* Progress bar inside card */}
-              <div className="mt-4 w-full bg-[#1A1E2B] rounded-full h-1.5 overflow-hidden">
+              <div className="mt-4 w-full bg-[#1A1A20] rounded-full h-1.5 overflow-hidden">
                 <div
-                  className="bg-[#00E599] h-full transition-all duration-300"
+                  className="bg-[#E10600] h-full transition-all duration-300"
                   style={{ width: `${summary.percentComplete}%` }}
                 />
               </div>

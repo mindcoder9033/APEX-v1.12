@@ -39,8 +39,8 @@ export const RecentActivityFeed: React.FC<RecentActivityFeedProps> = ({ activiti
   }
 
   return (
-    <Card className="space-y-4 bg-[#12151E] border-[#262C3D]">
-      <div className="flex items-center justify-between border-b border-[#262C3D] pb-3">
+    <Card className="space-y-4 bg-[#121216] border-[#262630]">
+      <div className="flex items-center justify-between border-b border-[#262630] pb-3">
         <div className="flex items-center gap-2">
           <Clock className="w-4 h-4 text-[#3B82F6]" />
           <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-[#F3F4F6]">
@@ -57,7 +57,7 @@ export const RecentActivityFeed: React.FC<RecentActivityFeedProps> = ({ activiti
           {activities.map((item) => (
             <div
               key={item.id}
-              className="bg-[#1A1E2B] p-3 rounded-lg border border-[#262C3D] flex items-start justify-between gap-3 text-xs"
+              className="bg-[#1A1A20] p-3 rounded-lg border border-[#262630] flex items-start justify-between gap-3 text-xs"
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
@@ -66,7 +66,7 @@ export const RecentActivityFeed: React.FC<RecentActivityFeedProps> = ({ activiti
                   ) : item.remediationRequired ? (
                     <AlertTriangle className="w-4 h-4 text-[#FFB800] shrink-0" />
                   ) : (
-                    <CheckCircle2 className="w-4 h-4 text-[#00E599] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#E10600] shrink-0" />
                   )}
                   <span className="font-bold text-[#F3F4F6]">{item.title}</span>
                 </div>
@@ -81,7 +81,7 @@ export const RecentActivityFeed: React.FC<RecentActivityFeedProps> = ({ activiti
               <div className="shrink-0 flex flex-col items-end gap-1">
                 {getGradeBadge(item.grade)}
                 {typeof item.score === 'number' && (
-                  <span className="text-[11px] font-mono text-[#00E599] font-bold">
+                  <span className="text-[11px] font-mono text-[#E10600] font-bold">
                     {item.score}% Score
                   </span>
                 )}
@@ -90,10 +90,10 @@ export const RecentActivityFeed: React.FC<RecentActivityFeedProps> = ({ activiti
           ))}
         </div>
       ) : (
-        <div className="bg-[#1A1E2B] p-6 rounded border border-[#262C3D] text-center space-y-2">
+        <div className="bg-[#1A1A20] p-6 rounded border border-[#262630] text-center space-y-2">
           <FileText className="w-8 h-8 text-[#9CA3AF] mx-auto opacity-50" />
           <div className="text-xs font-mono text-[#F3F4F6]">No Activity Records Found</div>
-          <p className="text-xs text-[#9CA3AF]">
+          <p className="text-xs text-[#9CA3AF] font-learning">
             Your session telemetry submissions and module exam attempts will be logged here in chronological order.
           </p>
         </div>

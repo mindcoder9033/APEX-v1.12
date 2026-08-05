@@ -21,7 +21,7 @@ export const ProgressBreakdown: React.FC = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <span className="text-xs font-mono uppercase tracking-widest text-[#00E599]">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#E10600]">
             Curriculum Progression Matrix
           </span>
           <h2 className="text-xl font-bold text-[#F3F4F6]">
@@ -48,13 +48,13 @@ export const ProgressBreakdown: React.FC = () => {
           return (
             <Card
               key={mod.id}
-              className={`space-y-4 bg-[#12151E] border-[#262C3D] ${
+              className={`space-y-4 bg-[#121216] border-[#262630] ${
                 !unlocked ? 'opacity-60' : ''
               }`}
             >
-              <div className="flex items-center justify-between border-b border-[#262C3D] pb-3">
+              <div className="flex items-center justify-between border-b border-[#262630] pb-3">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono font-bold text-[#00E599]">
+                  <span className="text-xs font-mono font-bold text-[#E10600]">
                     M{mod.moduleNumber}
                   </span>
                   <h3 className="font-bold text-[#F3F4F6]">{mod.title}</h3>
@@ -70,7 +70,7 @@ export const ProgressBreakdown: React.FC = () => {
                 )}
               </div>
 
-              <p className="text-xs text-[#9CA3AF] line-clamp-2">{mod.summary}</p>
+              <p className="text-xs text-[#9CA3AF] font-learning line-clamp-2">{mod.summary}</p>
 
               <TelemetryBar label="Module Progress" value={modulePercent} />
 
@@ -94,15 +94,15 @@ export const ProgressBreakdown: React.FC = () => {
                         key={sess.id}
                         className={`p-2.5 rounded border text-xs flex items-center justify-between transition-colors ${
                           sessionIsCompleted
-                            ? 'bg-[#00E599]/5 border-[#00E599]/30 text-[#F3F4F6]'
+                            ? 'bg-[#E10600]/10 border-[#E10600]/30 text-[#F3F4F6]'
                             : sessionIsUnlocked
-                            ? 'bg-[#1A1E2B] border-[#262C3D] text-[#F3F4F6]'
-                            : 'bg-[#12151E] border-[#262C3D]/50 text-[#9CA3AF]'
+                            ? 'bg-[#1A1A20] border-[#262630] text-[#F3F4F6]'
+                            : 'bg-[#121216] border-[#262630]/50 text-[#9CA3AF]'
                         }`}
                       >
                         <div className="flex items-center gap-2">
                           {sessionIsCompleted ? (
-                            <CheckCircle2 className="w-4 h-4 text-[#00E599] shrink-0" />
+                            <CheckCircle2 className="w-4 h-4 text-[#E10600] shrink-0" />
                           ) : sessionIsUnlocked ? (
                             <Play className="w-3.5 h-3.5 text-[#3B82F6] shrink-0" />
                           ) : (

@@ -3,10 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useCurriculum } from '../context/CurriculumContext'
 import { useAuth } from '../context/AuthContext'
 import { Step, Session } from '../types/curriculum'
-import { SessionAssessmentRecord, LapTimeEntry } from '../types/assessment'
+import { SessionAssessmentRecord } from '../types/assessment'
 import { allCurricula } from '../data/allCurriculum'
 import { getSessionDetailExtra } from '../data/sessionDetails'
-import { getInitialActiveStepIndex, isStepLocked } from '../lib/sessionPlayerEngine'
+import { getInitialActiveStepIndex } from '../lib/sessionPlayerEngine'
 import { sessionPlayerService } from '../services/sessionPlayerService'
 import { assessmentService } from '../services/assessmentService'
 import { SessionHeader } from '../components/session/SessionHeader'
@@ -20,12 +20,13 @@ import { SessionSummaryModal } from '../components/session/SessionSummaryModal'
 import { PerformanceEntryModal } from '../components/assessment/PerformanceEntryModal'
 import { MasteryEvaluationCard } from '../components/assessment/MasteryEvaluationCard'
 import { RemediationCard } from '../components/assessment/RemediationCard'
+import { CoachConsole } from '../components/coaching/CoachConsole'
 import { BookOpen, Sliders, PlayCircle, MessageSquare, Info, Trophy, PlusCircle } from 'lucide-react'
 
 export const SessionPlayer: React.FC = () => {
   const { sessionId } = useParams<{ sessionId: string }>()
   const navigate = useNavigate()
-  const { profile } = useAuth()
+  const { user } = useAuth()
   const {
     progressMap,
     toggleStepCompletion,
@@ -102,81 +103,63 @@ export const SessionPlayer: React.FC = () => {
         stepIdx,
         reflMap,
         rating,
-        profile?.id
+        user?.id
       )
-      const now = new Date()
-      setLastSavedText(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
+      setLastSavedText(`Saved ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`)
     },
-    [session?.id, profile?.id]
+    [session?.id, user?.id]
   )
 
-  // Handle Step Selection
-  const handleSelectStep = (index: number) => {
+  const handleSelectStep = (idx: number) => {
     if (!session) return
-    if (!isStepLocked(index, session, progressMap, devUnlockMode)) {
-      setCurrentStepIndex(index)
-      triggerAutosave(index, reflections, confidenceRating)
-    }
+    if (idx < 0 || idx >= session.steps.length) return
+    setCurrentStepIndex(idx)
+    triggerAutosave(idx, reflections, confidenceRating)
   }
 
-  // Handle Step Completion Toggle
   const handleToggleCurrentStep = async () => {
-    if (!session || !module) return
+    if (!session) return
     const step = session.steps[currentStepIndex]
     if (!step) return
+    await toggleStepCompletion(step.id, module?.id || '', session.id)
 
-    await toggleStepCompletion(step.id, module.id, session.id)
-
-    // Autosave state
-    triggerAutosave(currentStepIndex, reflections, confidenceRating)
-
-    // Check if session completed
-    const allCompleted = session.steps.every((s: Step) =>
-      s.id === step.id ? !progressMap[s.id] : progressMap[s.id]
-    )
-
-    if (allCompleted) {
+    // Automatically check if all steps complete to open summary modal
+    const updatedMap = { ...progressMap, [step.id]: !progressMap[step.id] }
+    const allStepsCompletedNow = session.steps.every((s: Step) => updatedMap[s.id])
+    if (allStepsCompletedNow) {
       setShowSummaryModal(true)
-    } else if (currentStepIndex < session.steps.length - 1) {
-      // Auto advance to next step if completing
-      const nextIdx = currentStepIndex + 1
-      setCurrentStepIndex(nextIdx)
-      triggerAutosave(nextIdx, reflections, confidenceRating)
     }
   }
 
   const handleSaveReflection = (text: string, rating?: number) => {
     if (!session) return
     const currentStep = session.steps[currentStepIndex]
-    const updatedReflections = { ...reflections, [currentStep?.id || 'general']: text }
+    if (!currentStep) return
+
+    const updatedReflections = { ...reflections, [currentStep.id]: text }
     setReflections(updatedReflections)
-    if (rating) setConfidenceRating(rating)
-    triggerAutosave(currentStepIndex, updatedReflections, rating)
+    if (rating !== undefined) setConfidenceRating(rating)
+    triggerAutosave(currentStepIndex, updatedReflections, rating || confidenceRating)
   }
 
-  // Handle Telemetry Performance Submission
-  const handleSubmitTelemetry = async (entry: LapTimeEntry) => {
+  const handleSubmitTelemetry = async (data: any) => {
     if (!session) return
-    const record = await assessmentService.saveAssessmentEntry(
-      session.id,
-      session.title,
-      entry,
-      profile?.id
-    )
+    const record = await assessmentService.saveAssessmentEntry(session.id, session.title, data, user?.id)
     setAssessmentRecord(record)
+    setShowEntryModal(false)
     setActiveTab('ASSESSMENT')
   }
 
   if (!session || !module || !level) {
     return (
-      <div className="min-h-screen bg-[#090A0F] text-[#F3F4F6] flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-screen bg-[#08080A] text-[#F3F4F6] flex flex-col items-center justify-center p-6 text-center">
         <h2 className="text-xl font-bold mb-2">Session Not Found</h2>
-        <p className="text-sm text-[#9CA3AF] mb-6">
+        <p className="text-sm text-[#9CA3AF] mb-6 font-learning">
           The requested training session ({sessionId}) does not exist in the APEX curriculum.
         </p>
         <button
           onClick={() => navigate('/curriculum')}
-          className="px-4 py-2 rounded-lg bg-[#00E599] text-[#090A0F] font-mono text-xs font-bold"
+          className="px-4 py-2 rounded-lg bg-[#E10600] text-white font-mono text-xs font-bold shadow-lg shadow-[#E10600]/30"
         >
           Return to Curriculum Overview
         </button>
@@ -188,8 +171,25 @@ export const SessionPlayer: React.FC = () => {
   const isCurrentStepCompleted = Boolean(progressMap[currentStep.id])
   const completedStepsCount = session.steps.filter((s: Step) => progressMap[s.id]).length
 
+  const formattedPrescription = useMemo(() => {
+    const raw = currentStep?.prescription || extraDetails?.prescription
+    if (!raw) return undefined
+    const assistsText =
+      typeof raw.assists === 'string'
+        ? raw.assists
+        : raw.assists
+        ? `ABS: ${raw.assists.abs}, TCS: ${raw.assists.tc}`
+        : 'ABS On, TCS Off'
+    return {
+      track: raw.track || 'Lime Rock Park',
+      car: raw.car || 'Hyundai Elantra N',
+      assists: assistsText,
+      weather: raw.weather || 'Clear / Dry'
+    }
+  }, [currentStep, extraDetails])
+
   return (
-    <div className="min-h-screen bg-[#090A0F] text-[#F3F4F6] flex flex-col font-sans selection:bg-[#00E599] selection:text-[#090A0F]">
+    <div className="min-h-screen bg-[#08080A] text-[#F3F4F6] flex flex-col font-sans selection:bg-[#E10600] selection:text-white">
       {/* Session Player Header */}
       <SessionHeader
         session={session}
@@ -204,8 +204,8 @@ export const SessionPlayer: React.FC = () => {
 
       {/* Main Content Layout */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left Column: Step Navigation Stepper (4 cols) */}
-        <aside className="lg:col-span-4 space-y-6">
+        {/* Left Column: Step Navigation Stepper (3 cols) */}
+        <aside className="lg:col-span-3 space-y-6">
           <StepStepper
             steps={session.steps}
             currentStepIndex={currentStepIndex}
@@ -216,18 +216,18 @@ export const SessionPlayer: React.FC = () => {
           />
 
           {/* Performance Entry Quick Trigger Card */}
-          <div className="bg-[#12151E] border border-[#262C3D] rounded-xl p-4 space-y-3">
+          <div className="bg-[#121216] border border-[#262630] rounded-xl p-4 space-y-3">
             <div className="flex items-center justify-between text-xs font-mono text-[#9CA3AF]">
               <span>Assessment Status</span>
               {assessmentRecord ? (
-                <span className="text-[#00E599] font-bold">{assessmentRecord.result.grade}</span>
+                <span className="text-[#E10600] font-bold">{assessmentRecord.result.grade}</span>
               ) : (
                 <span className="text-[#FFB800]">Not Evaluated</span>
               )}
             </div>
             <button
               onClick={() => setShowEntryModal(true)}
-              className="w-full py-2 px-3 rounded-lg bg-[#00E599]/10 hover:bg-[#00E599]/20 border border-[#00E599]/40 text-[#00E599] font-mono text-xs font-bold transition-all flex items-center justify-center gap-2"
+              className="w-full py-2 px-3 rounded-lg bg-[#E10600]/10 hover:bg-[#E10600]/20 border border-[#E10600]/40 text-[#E10600] font-mono text-xs font-bold transition-all flex items-center justify-center gap-2"
             >
               <PlusCircle className="w-4 h-4" />
               <span>{assessmentRecord ? 'Update Telemetry Entry' : 'Log Performance Telemetry'}</span>
@@ -235,29 +235,29 @@ export const SessionPlayer: React.FC = () => {
           </div>
 
           {/* Module Context Card */}
-          <div className="bg-[#12151E] border border-[#262C3D] rounded-xl p-4 space-y-3">
+          <div className="bg-[#121216] border border-[#262630] rounded-xl p-4 space-y-3">
             <div className="flex items-center justify-between text-xs font-mono text-[#9CA3AF]">
               <span>Module Context</span>
-              <span className="text-[#00E599]">Module {module.moduleNumber}</span>
+              <span className="text-[#E10600]">Module {module.moduleNumber}</span>
             </div>
             <p className="text-xs font-bold text-[#F3F4F6]">{module.title}</p>
-            <div className="pt-2 border-t border-[#262C3D] flex items-center justify-between text-[11px] font-mono text-[#9CA3AF]">
+            <div className="pt-2 border-t border-[#262630] flex items-center justify-between text-[11px] font-mono text-[#9CA3AF]">
               <span>Wheel Target:</span>
-              <span className="text-[#00E599]">Moza R3 DD</span>
+              <span className="text-[#E10600]">Moza R3 DD</span>
             </div>
           </div>
         </aside>
 
-        {/* Right Column: Active View Area (8 cols) */}
-        <section className="lg:col-span-8 space-y-6">
+        {/* Right Column: Active View Area (9 cols) */}
+        <section className="lg:col-span-9 space-y-6">
           {/* Navigation View Tabs */}
-          <div className="flex flex-wrap items-center gap-2 bg-[#12151E] p-1.5 rounded-xl border border-[#262C3D]">
+          <div className="flex flex-wrap items-center gap-2 bg-[#121216] p-1.5 rounded-xl border border-[#262630]">
             <button
               onClick={() => setActiveTab('EXECUTION')}
               className={`flex-1 py-2 px-3 rounded-lg text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === 'EXECUTION'
-                  ? 'bg-[#00E599] text-[#090A0F]'
-                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#090A0F]'
+                  ? 'bg-[#E10600] text-white shadow-md shadow-[#E10600]/30'
+                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
               }`}
             >
               <PlayCircle className="w-3.5 h-3.5" />
@@ -268,8 +268,8 @@ export const SessionPlayer: React.FC = () => {
               onClick={() => setActiveTab('ASSESSMENT')}
               className={`flex-1 py-2 px-3 rounded-lg text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === 'ASSESSMENT'
-                  ? 'bg-[#00E599] text-[#090A0F]'
-                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#090A0F]'
+                  ? 'bg-[#E10600] text-white shadow-md shadow-[#E10600]/30'
+                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
               }`}
             >
               <Trophy className="w-3.5 h-3.5" />
@@ -280,8 +280,8 @@ export const SessionPlayer: React.FC = () => {
               onClick={() => setActiveTab('THEORY')}
               className={`flex-1 py-2 px-3 rounded-lg text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === 'THEORY'
-                  ? 'bg-[#00E599] text-[#090A0F]'
-                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#090A0F]'
+                  ? 'bg-[#E10600] text-white shadow-md shadow-[#E10600]/30'
+                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
               }`}
             >
               <BookOpen className="w-3.5 h-3.5" />
@@ -292,8 +292,8 @@ export const SessionPlayer: React.FC = () => {
               onClick={() => setActiveTab('PRESCRIPTION')}
               className={`flex-1 py-2 px-3 rounded-lg text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === 'PRESCRIPTION'
-                  ? 'bg-[#00E599] text-[#090A0F]'
-                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#090A0F]'
+                  ? 'bg-[#E10600] text-white shadow-md shadow-[#E10600]/30'
+                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
               }`}
             >
               <Sliders className="w-3.5 h-3.5" />
@@ -304,8 +304,8 @@ export const SessionPlayer: React.FC = () => {
               onClick={() => setActiveTab('REFLECTION')}
               className={`flex-1 py-2 px-3 rounded-lg text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === 'REFLECTION'
-                  ? 'bg-[#00E599] text-[#090A0F]'
-                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#090A0F]'
+                  ? 'bg-[#E10600] text-white shadow-md shadow-[#E10600]/30'
+                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
               }`}
             >
               <MessageSquare className="w-3.5 h-3.5" />
@@ -316,8 +316,8 @@ export const SessionPlayer: React.FC = () => {
               onClick={() => setActiveTab('OVERVIEW')}
               className={`py-2 px-3 rounded-lg text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
                 activeTab === 'OVERVIEW'
-                  ? 'bg-[#00E599] text-[#090A0F]'
-                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#090A0F]'
+                  ? 'bg-[#E10600] text-white shadow-md shadow-[#E10600]/30'
+                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
               }`}
             >
               <Info className="w-3.5 h-3.5" />
@@ -325,82 +325,95 @@ export const SessionPlayer: React.FC = () => {
             </button>
           </div>
 
-          {/* Active View Component Rendering */}
-          {activeTab === 'EXECUTION' && (
-            <StepExecutionCard
-              step={currentStep}
-              stepIndex={currentStepIndex}
-              totalSteps={session.steps.length}
-              isCompleted={isCurrentStepCompleted}
-              onToggleComplete={handleToggleCurrentStep}
-              onNextStep={() => handleSelectStep(currentStepIndex + 1)}
-              onPrevStep={() => handleSelectStep(currentStepIndex - 1)}
-              hasNextStep={currentStepIndex < session.steps.length - 1}
-              hasPrevStep={currentStepIndex > 0}
-            />
-          )}
+          {/* Active View + Coach Console Grid */}
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
+            <div className="xl:col-span-2 space-y-6">
+              {activeTab === 'EXECUTION' && (
+                <StepExecutionCard
+                  step={currentStep}
+                  stepIndex={currentStepIndex}
+                  totalSteps={session.steps.length}
+                  isCompleted={isCurrentStepCompleted}
+                  onToggleComplete={handleToggleCurrentStep}
+                  onNextStep={() => handleSelectStep(currentStepIndex + 1)}
+                  onPrevStep={() => handleSelectStep(currentStepIndex - 1)}
+                  hasNextStep={currentStepIndex < session.steps.length - 1}
+                  hasPrevStep={currentStepIndex > 0}
+                />
+              )}
 
-          {activeTab === 'ASSESSMENT' && (
-            <div className="space-y-6">
-              {assessmentRecord ? (
-                <>
-                  <MasteryEvaluationCard
-                    result={assessmentRecord.result}
-                    onReevaluate={() => setShowEntryModal(true)}
-                  />
+              {activeTab === 'ASSESSMENT' && (
+                <div className="space-y-6">
+                  {assessmentRecord ? (
+                    <>
+                      <MasteryEvaluationCard
+                        result={assessmentRecord.result}
+                        onReevaluate={() => setShowEntryModal(true)}
+                      />
 
-                  {assessmentRecord.remediationPlan && (
-                    <RemediationCard
-                      plan={assessmentRecord.remediationPlan}
-                      onRetryDrill={() => {
-                        setCurrentStepIndex(0)
-                        setActiveTab('EXECUTION')
-                      }}
-                    />
+                      {assessmentRecord.remediationPlan && (
+                        <RemediationCard
+                          plan={assessmentRecord.remediationPlan}
+                          onRetryDrill={() => {
+                            setCurrentStepIndex(0)
+                            setActiveTab('EXECUTION')
+                          }}
+                        />
+                      )}
+                    </>
+                  ) : (
+                    <div className="bg-[#121216] border border-[#262630] rounded-2xl p-8 text-center space-y-4">
+                      <Trophy className="w-12 h-12 text-[#FFB800] mx-auto" />
+                      <div className="space-y-1">
+                        <h3 className="text-lg font-bold text-[#F3F4F6]">Session Assessment Pending</h3>
+                        <p className="text-xs text-[#9CA3AF] font-learning max-w-md mx-auto">
+                          Log your lap times and clean lap count to receive an automated mastery evaluation and telemetry diagnostic report.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setShowEntryModal(true)}
+                        className="px-6 py-2.5 rounded-xl bg-[#E10600] text-white hover:bg-[#FF1E19] font-mono text-xs font-bold transition-all inline-flex items-center gap-2 shadow-lg shadow-[#E10600]/30"
+                      >
+                        <PlusCircle className="w-4 h-4" />
+                        <span>Enter Performance Telemetry</span>
+                      </button>
+                    </div>
                   )}
-                </>
-              ) : (
-                <div className="bg-[#12151E] border border-[#262C3D] rounded-2xl p-8 text-center space-y-4">
-                  <Trophy className="w-12 h-12 text-[#FFB800] mx-auto" />
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-bold text-[#F3F4F6]">Session Assessment Pending</h3>
-                    <p className="text-xs text-[#9CA3AF] max-w-md mx-auto">
-                      Log your lap times and clean lap count to receive an automated mastery evaluation and telemetry diagnostic report.
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => setShowEntryModal(true)}
-                    className="px-6 py-2.5 rounded-xl bg-[#00E599] text-[#090A0F] hover:bg-[#00FFAB] font-mono text-xs font-bold transition-all inline-flex items-center gap-2 shadow-lg shadow-[#00E599]/20"
-                  >
-                    <PlusCircle className="w-4 h-4" />
-                    <span>Enter Performance Telemetry</span>
-                  </button>
                 </div>
               )}
+
+              {activeTab === 'THEORY' && (
+                <TheorySection step={currentStep} extraDetails={extraDetails} />
+              )}
+
+              {activeTab === 'PRESCRIPTION' && (
+                <PrescriptionCard prescription={currentStep.prescription || extraDetails.prescription} />
+              )}
+
+              {activeTab === 'REFLECTION' && (
+                <ReflectionCard
+                  step={currentStep}
+                  extraDetails={extraDetails}
+                  savedReflection={reflections[currentStep.id] || ''}
+                  savedConfidence={confidenceRating}
+                  onSaveReflection={handleSaveReflection}
+                />
+              )}
+
+              {activeTab === 'OVERVIEW' && (
+                <SessionOverviewSection session={session} extraDetails={extraDetails} />
+              )}
             </div>
-          )}
 
-          {activeTab === 'THEORY' && (
-            <TheorySection step={currentStep} extraDetails={extraDetails} />
-          )}
-
-          {activeTab === 'PRESCRIPTION' && (
-            <PrescriptionCard prescription={currentStep.prescription || extraDetails.prescription} />
-          )}
-
-          {activeTab === 'REFLECTION' && (
-            <ReflectionCard
-              step={currentStep}
-              extraDetails={extraDetails}
-              savedReflection={reflections[currentStep.id] || ''}
-              savedConfidence={confidenceRating}
-              onSaveReflection={handleSaveReflection}
-            />
-          )}
-
-          {activeTab === 'OVERVIEW' && (
-            <SessionOverviewSection session={session} extraDetails={extraDetails} />
-          )}
+            {/* Persistent Contextual Coach Console */}
+            <div className="xl:col-span-1">
+              <CoachConsole
+                currentObjective={currentStep.objective}
+                prescription={formattedPrescription}
+                coachAdvice={currentStep.coachNotes?.[0] || 'Focus on smooth pedal releases to maintain weight transfer balance across the front axle.'}
+              />
+            </div>
+          </div>
         </section>
       </main>
 

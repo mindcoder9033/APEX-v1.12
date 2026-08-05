@@ -69,9 +69,9 @@ export const DriverProfile: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Profile Header */}
-      <div className="bg-[#12151E] border border-[#262C3D] rounded-xl p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
+      <div className="bg-[#121216] border border-[#262630] rounded-xl p-6 sm:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-xl">
         <div className="flex items-center gap-5">
-          <div className="w-16 h-16 bg-[#00E599]/10 border-2 border-[#00E599] text-[#00E599] rounded-xl flex items-center justify-center font-mono font-bold text-2xl shadow-[0_0_15px_rgba(0,229,153,0.2)]">
+          <div className="w-16 h-16 bg-[#E10600]/10 border-2 border-[#E10600] text-[#E10600] rounded-xl flex items-center justify-center font-mono font-bold text-2xl shadow-[0_0_15px_rgba(225,6,0,0.35)]">
             {initials}
           </div>
           <div>
@@ -81,7 +81,7 @@ export const DriverProfile: React.FC = () => {
                 {currentProfile.currentLevel === 'BEGINNER' ? 'Level 1 Cadet' : currentProfile.currentLevel}
               </Badge>
               {currentProfile.gamertag && (
-                <span className="text-xs font-mono text-[#00E599] bg-[#00E599]/10 px-2 py-0.5 rounded border border-[#00E599]/30">
+                <span className="text-xs font-mono text-[#E10600] bg-[#E10600]/10 px-2 py-0.5 rounded border border-[#E10600]/30">
                   @{currentProfile.gamertag}
                 </span>
               )}
@@ -108,7 +108,7 @@ export const DriverProfile: React.FC = () => {
           {!isAuthenticated && (
             <button
               onClick={loginAsDemo}
-              className="px-3 py-1.5 bg-[#00E599]/10 text-[#00E599] border border-[#00E599] rounded text-xs font-mono font-bold hover:bg-[#00E599]/20 transition-all flex items-center gap-1.5"
+              className="px-3 py-1.5 bg-[#E10600]/10 text-[#E10600] border border-[#E10600] rounded text-xs font-mono font-bold hover:bg-[#E10600]/20 transition-all flex items-center gap-1.5"
             >
               <Zap className="w-3.5 h-3.5" /> Initialize Demo
             </button>
@@ -117,13 +117,13 @@ export const DriverProfile: React.FC = () => {
       </div>
 
       {/* Tabs Navigation */}
-      <div className="flex items-center gap-2 border-b border-[#262C3D] font-mono text-xs pb-1">
+      <div className="flex items-center gap-2 border-b border-[#262630] font-mono text-xs pb-1">
         <button
           onClick={() => handleTabChange('stats')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-t-lg font-bold transition-colors ${
             activeTab === 'stats'
-              ? 'bg-[#12151E] text-[#00E599] border-t-2 border-x border-[#00E599] border-b-transparent'
-              : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1E2B]'
+              ? 'bg-[#121216] text-[#E10600] border-t-2 border-x border-[#E10600] border-b-transparent'
+              : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
           }`}
         >
           <BarChart3 className="w-4 h-4" />
@@ -134,8 +134,8 @@ export const DriverProfile: React.FC = () => {
           onClick={() => handleTabChange('edit')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-t-lg font-bold transition-colors ${
             activeTab === 'edit'
-              ? 'bg-[#12151E] text-[#00E599] border-t-2 border-x border-[#00E599] border-b-transparent'
-              : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1E2B]'
+              ? 'bg-[#121216] text-[#E10600] border-t-2 border-x border-[#E10600] border-b-transparent'
+              : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
           }`}
         >
           <User className="w-4 h-4" />
@@ -146,8 +146,8 @@ export const DriverProfile: React.FC = () => {
           onClick={() => handleTabChange('settings')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-t-lg font-bold transition-colors ${
             activeTab === 'settings'
-              ? 'bg-[#12151E] text-[#00E599] border-t-2 border-x border-[#00E599] border-b-transparent'
-              : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1E2B]'
+              ? 'bg-[#121216] text-[#E10600] border-t-2 border-x border-[#E10600] border-b-transparent'
+              : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1A1A20]'
           }`}
         >
           <Sliders className="w-4 h-4" />
@@ -160,7 +160,7 @@ export const DriverProfile: React.FC = () => {
         <div className="space-y-8 animate-in fade-in">
           {/* Driver Telemetry Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 font-mono">
-            <Card className="space-y-1">
+            <Card className="space-y-1 bg-[#121216] border-[#262630]">
               <div className="flex items-center justify-between text-xs text-[#9CA3AF]">
                 <span>Practice Time</span>
                 <Clock className="w-4 h-4 text-[#3B82F6]" />
@@ -168,21 +168,21 @@ export const DriverProfile: React.FC = () => {
               <div className="text-2xl font-bold text-[#F3F4F6]">
                 {currentProfile.totalPracticeHours} Hours
               </div>
-              <span className="text-[11px] text-[#00E599]">Level 1 Target: 20 Hours</span>
+              <span className="text-[11px] text-[#E10600]">Level 1 Target: 20 Hours</span>
             </Card>
 
-            <Card className="space-y-1">
+            <Card className="space-y-1 bg-[#121216] border-[#262630]">
               <div className="flex items-center justify-between text-xs text-[#9CA3AF]">
                 <span>Brake Linearity</span>
-                <Activity className="w-4 h-4 text-[#00E599]" />
+                <Activity className="w-4 h-4 text-[#E10600]" />
               </div>
-              <div className="text-2xl font-bold text-[#00E599]">
+              <div className="text-2xl font-bold text-[#E10600]">
                 {currentProfile.brakeLinearityAvg ?? 95.8}%
               </div>
               <span className="text-[11px] text-[#9CA3AF]">Passing Criterion: ≥ 95.0%</span>
             </Card>
 
-            <Card className="space-y-1">
+            <Card className="space-y-1 bg-[#121216] border-[#262630]">
               <div className="flex items-center justify-between text-xs text-[#9CA3AF]">
                 <span>Sessions Passed</span>
                 <CheckCircle2 className="w-4 h-4 text-[#FFB800]" />
@@ -193,14 +193,14 @@ export const DriverProfile: React.FC = () => {
               <span className="text-[11px] text-[#9CA3AF]">Module 1 & 2 Completed</span>
             </Card>
 
-            <Card className="space-y-1">
+            <Card className="space-y-1 bg-[#121216] border-[#262630]">
               <div className="flex items-center justify-between text-xs text-[#9CA3AF]">
                 <span>Certification</span>
                 <Award className="w-4 h-4 text-purple-400" />
               </div>
               <div className="text-2xl font-bold text-[#9CA3AF]">
                 {currentProfile.certificationStatus.beginnerCertified ? (
-                  <span className="text-[#00E599]">Certified</span>
+                  <span className="text-[#E10600]">Certified</span>
                 ) : (
                   'Pending'
                 )}
@@ -210,17 +210,17 @@ export const DriverProfile: React.FC = () => {
           </div>
 
           {/* Hardware Calibration Specification */}
-          <Card className="space-y-4">
-            <div className="flex items-center justify-between border-b border-[#262C3D] pb-3">
+          <Card className="space-y-4 bg-[#121216] border-[#262630]">
+            <div className="flex items-center justify-between border-b border-[#262630] pb-3">
               <div className="flex items-center gap-2">
-                <HardDrive className="w-5 h-5 text-[#00E599]" />
+                <HardDrive className="w-5 h-5 text-[#E10600]" />
                 <h3 className="text-lg font-bold text-[#F3F4F6]">Hardware & Peripheral Profile</h3>
               </div>
               <Badge variant="success">Telemetry Sync Verified</Badge>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
-              <div className="bg-[#1A1E2B] p-4 rounded border border-[#262C3D] space-y-1">
+              <div className="bg-[#1A1A20] p-4 rounded border border-[#262630] space-y-1">
                 <span className="text-[#9CA3AF] uppercase block">Wheel Base</span>
                 <span className="text-[#F3F4F6] font-bold text-sm block">
                   {currentProfile.hardwareSetup.wheelBase}
@@ -228,7 +228,7 @@ export const DriverProfile: React.FC = () => {
                 <span className="text-gray-400 text-[11px]">Direct Telemetry Feed: Active</span>
               </div>
 
-              <div className="bg-[#1A1E2B] p-4 rounded border border-[#262C3D] space-y-1">
+              <div className="bg-[#1A1A20] p-4 rounded border border-[#262630] space-y-1">
                 <span className="text-[#9CA3AF] uppercase block">Pedal Set</span>
                 <span className="text-[#F3F4F6] font-bold text-sm block">
                   {currentProfile.hardwareSetup.pedalSet}
@@ -236,7 +236,7 @@ export const DriverProfile: React.FC = () => {
                 <span className="text-gray-400 text-[11px]">Brake Curve Calibration: Linear</span>
               </div>
 
-              <div className="bg-[#1A1E2B] p-4 rounded border border-[#262C3D] space-y-1">
+              <div className="bg-[#1A1A20] p-4 rounded border border-[#262630] space-y-1">
                 <span className="text-[#9CA3AF] uppercase block">Simulation Platform</span>
                 <span className="text-[#F3F4F6] font-bold text-sm block">
                   {currentProfile.hardwareSetup.platform}
