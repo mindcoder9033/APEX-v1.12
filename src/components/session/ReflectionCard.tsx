@@ -45,11 +45,21 @@ export const ReflectionCard: React.FC<ReflectionCardProps> = ({
       </div>
 
       {/* Reflection Prompt Box */}
-      <div className="bg-[#090A0F] border border-[#262C3D] rounded-lg p-4">
-        <span className="text-[10px] font-mono text-[#00E599] uppercase font-bold block mb-1">
-          Coach Guided Reflection Prompt
+      <div className="bg-[#090A0F] border border-[#262C3D] rounded-lg p-4 space-y-2">
+        <span className="text-[10px] font-mono text-[#00E599] uppercase font-bold block">
+          Coach Guided Reflection Questions
         </span>
-        <p className="text-xs text-[#F3F4F6] italic">{promptText}</p>
+        {extraDetails.reflectionQuestions && extraDetails.reflectionQuestions.length > 0 ? (
+          <ul className="space-y-1.5 text-xs text-[#F3F4F6] font-learning">
+            {extraDetails.reflectionQuestions.map((q, idx) => (
+              <li key={idx} className="leading-relaxed">
+                {q}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-xs text-[#F3F4F6] italic">{promptText}</p>
+        )}
       </div>
 
       {/* Textarea Input */}

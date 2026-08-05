@@ -11,47 +11,64 @@ export const beginnerCurriculum: LevelCurriculum = {
     {
       id: 'mod-1',
       moduleNumber: 1,
-      title: 'Module 1: Hardware & Input Calibration',
-      focusArea: 'Wheel & Pedal Ergonomics',
-      summary: 'Establish baseline force feedback, pedal linearity, and seating posture for the Moza R3 on Forza Motorsport (2023).',
+      title: 'Module 1: Foundations of Vehicle Control',
+      focusArea: 'Vehicle Control & Discipline',
+      summary: 'Establish prescribed driving environment, learn the APEX discipline philosophy, and execute clean lap practice.',
       sessions: [
         {
           id: 'sess-1-1',
           sessionNumber: 1,
-          title: 'Session 1.1: Pedal Range & Linearity',
-          description: 'Calibrate brake and throttle deadzones in Moza Pit House to ensure 0-100% linear travel.',
-          car: '2021 Hyundai Elantra N',
-          track: 'Lime Rock Park - Full Circuit',
-          estimatedMinutes: 20,
+          title: 'Session 1 — Welcome to the Academy',
+          description: 'Configure prescribed driving environment, complete initial controlled laps, and establish consistency over speed.',
+          car: 'Mazda MX-5 Miata',
+          track: 'Maple Valley - Full Circuit',
+          estimatedMinutes: 45,
           steps: [
             {
               id: 'step-1-1-1',
               stepNumber: 1,
-              title: 'Pedal Travel Verification',
+              title: 'Exercise 1 — Become Familiar with the Car',
               type: 'LESSON',
-              objective: 'Verify 0% resting pedal input and 100% full depression without force strain.',
-              passingCriteria: 'Zero resting noise on brake channel.',
+              objective: 'Become comfortable with steering, braking, and throttle response.',
+              passingCriteria: 'Complete 3 relaxed laps while observing vehicle balance and input response.',
               instructions: [
-                'Launch Moza Pit House on PC or Xbox App.',
-                'Depress brake pedal firmly 5 times.',
-                'Ensure maximum brake pressure matches natural leg force threshold.'
+                'Drive three relaxed laps around Maple Valley Full Circuit.',
+                'Ignore lap times completely.',
+                'Observe steering sensitivity, brake response, throttle response, and vehicle balance.'
               ]
             },
             {
               id: 'step-1-1-2',
               stepNumber: 2,
-              title: 'Threshold Brake Linearity Drill',
+              title: 'Exercise 2 — Drive Smoothly',
               type: 'DRILL',
-              objective: 'Hold 80% brake input for 3 seconds on straightaway without locking ABS.',
-              passingCriteria: 'Input variance < 4% across 5 attempts.',
+              objective: 'Reduce unnecessary vehicle movement through gentle, controlled inputs.',
+              passingCriteria: 'Complete 5 consecutive laps with smooth steering, gentle braking, and steady acceleration.',
               instructions: [
-                'Drive on Lime Rock Park main straight at 80 MPH.',
-                'Apply brake smoothly to 80% mark.',
-                'Hold input steady without pumping pedals.'
+                'Complete five consecutive laps.',
+                'Focus on gentle steering, gentle braking, and gentle acceleration.',
+                'Do not attempt to increase speed—maintain a relaxed pace.'
               ],
               telemetryThreshold: {
-                metric: 'Brake Linearity Variance',
-                targetValue: '< 4%'
+                metric: 'Input Modulation',
+                targetValue: 'Smooth Ramps (Zero Spikes)'
+              }
+            },
+            {
+              id: 'step-1-1-3',
+              stepNumber: 3,
+              title: 'Exercise 3 — Stay on the Track',
+              type: 'ASSESSMENT',
+              objective: 'Complete clean laps without spins, off-track excursions, or collisions.',
+              passingCriteria: 'Complete 5 consecutive clean laps without spinning, leaving the circuit, or major collisions.',
+              instructions: [
+                'Drive until you complete 5 consecutive clean laps.',
+                'Avoid spinning, leaving the circuit, or significant collisions.',
+                'Log lap times, clean lap count, spins, and off-track incidents upon stint completion.'
+              ],
+              telemetryThreshold: {
+                metric: 'Clean Laps Stint',
+                targetValue: '5 Consecutive Clean Laps'
               }
             }
           ]

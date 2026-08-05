@@ -30,6 +30,8 @@ export const PerformanceEntryModal: React.FC<PerformanceEntryModalProps> = ({
   )
   const [cleanLaps, setCleanLaps] = useState<number>(existingEntry?.cleanLaps ?? 8)
   const [totalLaps, setTotalLaps] = useState<number>(existingEntry?.totalLaps ?? 10)
+  const [spins, setSpins] = useState<number>(existingEntry?.spins ?? 0)
+  const [offTrackIncidents, setOffTrackIncidents] = useState<number>(existingEntry?.offTrackIncidents ?? 0)
   const [notes, setNotes] = useState<string>(existingEntry?.notes || '')
   const [errorText, setErrorText] = useState<string | null>(null)
 
@@ -42,6 +44,8 @@ export const PerformanceEntryModal: React.FC<PerformanceEntryModalProps> = ({
     setAvgLap(preset.avgLap)
     setCleanLaps(preset.cleanLaps)
     setTotalLaps(preset.totalLaps)
+    setSpins(preset.spins ?? 0)
+    setOffTrackIncidents(preset.offTrackIncidents ?? 0)
     setNotes(preset.notes || '')
     setErrorText(null)
   }
@@ -64,6 +68,8 @@ export const PerformanceEntryModal: React.FC<PerformanceEntryModalProps> = ({
       avgLap,
       cleanLaps: Number(cleanLaps),
       totalLaps: Number(totalLaps),
+      spins: Number(spins),
+      offTrackIncidents: Number(offTrackIncidents),
       notes
     })
     onClose()
@@ -195,6 +201,36 @@ export const PerformanceEntryModal: React.FC<PerformanceEntryModalProps> = ({
                 onChange={(e) => setTotalLaps(parseInt(e.target.value) || 10)}
                 className="w-full bg-[#090A0F] border border-[#262C3D] focus:border-[#00E599] rounded-lg px-3 py-2 text-sm font-mono text-[#F3F4F6] outline-none transition-colors"
                 required
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            {/* Spins Count */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-mono text-[#9CA3AF] flex items-center gap-1.5">
+                Number of Spins
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={spins}
+                onChange={(e) => setSpins(parseInt(e.target.value) || 0)}
+                className="w-full bg-[#090A0F] border border-[#262C3D] focus:border-[#00E599] rounded-lg px-3 py-2 text-sm font-mono text-[#F3F4F6] outline-none transition-colors"
+              />
+            </div>
+
+            {/* Off-Track Incidents */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-mono text-[#9CA3AF] flex items-center gap-1.5">
+                Off-Track Incidents
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={offTrackIncidents}
+                onChange={(e) => setOffTrackIncidents(parseInt(e.target.value) || 0)}
+                className="w-full bg-[#090A0F] border border-[#262C3D] focus:border-[#00E599] rounded-lg px-3 py-2 text-sm font-mono text-[#F3F4F6] outline-none transition-colors"
               />
             </div>
           </div>

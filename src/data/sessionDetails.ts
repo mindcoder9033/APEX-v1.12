@@ -9,6 +9,7 @@ export interface SessionDetailExtra {
   visualContentUrl?: string
   prescription: TrainingPrescription
   reflectionPrompt: string
+  reflectionQuestions?: string[]
 }
 
 export const defaultMozaPrescription: TrainingPrescription = {
@@ -37,30 +38,55 @@ export const defaultMozaPrescription: TrainingPrescription = {
 export const sessionDetailsMap: Record<string, SessionDetailExtra> = {
   'sess-1-1': {
     overviewText:
-      'Session 1.1 focuses on establishing your foundational hardware connection. You will calibrate pedal travel, deadzones, and force feedback linearity on your Moza R3 Direct Drive system within Forza Motorsport.',
-    theoryText: `Linear pedal control is the cornerstone of high-performance driving. Non-linear brake travel introduces muscle memory inconsistencies, causing unpredictable weight transfer during heavy deceleration. 
-    
-When calibrating the Moza R3 load cell or linear potentiometers, the initial 5% of brake pedal travel should filter out resting foot pressure, while 100% depression must require deliberate physical force without reaching your physical fatigue limit.`,
+      'Welcome to APEX. Today is not about driving fast; today is about learning how to learn. Every professional racing driver begins with fundamentals—before speed comes discipline, before competition comes control. This session introduces the APEX Academy philosophy and establishes your baseline environment.',
+    theoryText: `The Goal of Beginner Training:
+The objective of the Beginner curriculum is NOT to produce fast lap times. The objective is to produce a driver who can keep the car under control, drive repeatable laps, follow the intended racing line, avoid unnecessary mistakes, and build confidence through consistency.
+
+The Three Rules of APEX:
+• Rule 1: Smooth inputs create stable cars. Abrupt steering, braking, or throttle application reduces control.
+• Rule 2: Consistency is more valuable than one fast lap. Repeating similar laps builds genuine skill.
+• Rule 3: Mistakes are information. Identify the cause, understand it, and improve.`,
     learningObjectives: [
-      'Eliminate resting foot noise on brake and throttle telemetry channels',
-      'Establish a 1:1 physical-to-virtual pedal linearity travel curve',
-      'Hold a steady 80% threshold brake pressure without triggering unwanted ABS chatter',
-      'Develop muscle memory for precise 5% pedal modulation steps'
+      'Configure the prescribed driving environment on Maple Valley Full Circuit in the Mazda MX-5 Miata',
+      'Develop disciplined habits and smooth steering, braking, and acceleration inputs',
+      'Complete a minimum of 5 consecutive clean laps without spinning, leaving the circuit, or major collisions',
+      'Understand and apply the APEX core philosophy: Slow is smooth, smooth is consistent, consistent becomes fast'
     ],
     coachNotes: [
-      'Moza R3 Tip: Set brake minimum deadzone to 3% in Moza Pit House to prevent accidental dragging.',
-      'Always wear driving shoes or rubberized socks for consistent pedal pressure sensation.',
-      'Watch your telemetry telemetry bar in Forza: abrupt spiking indicates foot tension; smooth ramps indicate relaxed calf modulation.'
+      'Coach Briefing: Welcome to APEX. Today you are not trying to impress anyone. Ignore lap records, speed, and competition.',
+      'Avoid turning the steering wheel abruptly or pressing throttle/brake pedals suddenly.',
+      'Do not restart after every small mistake—every mistake is valuable telemetry information for your driver log.',
+      'Academy Principle: Slow is smooth. Smooth is consistent. Consistent becomes fast.'
     ],
-    visualCaption: 'Telemetry Trace: Linear Brake Application vs Abrupt Spiking',
+    visualCaption: 'Beginner Baseline: Mazda MX-5 Miata on Maple Valley Full Circuit',
     visualContentUrl: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80',
     prescription: {
       ...defaultMozaPrescription,
-      track: 'Lime Rock Park - Full Circuit',
-      car: '2021 Hyundai Elantra N (FWD)'
+      track: 'Maple Valley - Full Circuit',
+      trackLayout: 'Full Circuit (2.51 miles / 4.04 km)',
+      car: 'Mazda MX-5 Miata',
+      carSetup: 'Factory Default',
+      transmission: 'Automatic',
+      camera: 'Cockpit View (recommended)',
+      assists: {
+        abs: 'Preset (On)',
+        tc: 'Preset (On)',
+        stm: 'Preset (On)',
+        line: 'Curriculum Preset'
+      },
+      weather: 'Clear',
+      timeOfDay: 'Day',
+      fuel: 'Default'
     },
     reflectionPrompt:
-      'How consistent was your leg muscle memory when attempting to hold 80% brake pressure? Did you feel any foot fatigue or accidental pedal dragging?'
+      'Complete your driver self-reflection across all 5 key practice questions below to record your technical progress.',
+    reflectionQuestions: [
+      '1. Which corner felt the most difficult?',
+      '2. What caused your biggest mistake today?',
+      '3. Did you ever feel rushed? When?',
+      '4. Did you make abrupt steering, braking, or throttle inputs?',
+      '5. What would you focus on improving during your next practice?'
+    ]
   },
   'sess-2-1': {
     overviewText:

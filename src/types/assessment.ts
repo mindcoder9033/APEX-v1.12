@@ -7,6 +7,8 @@ export interface LapTimeEntry {
   avgLap: string // e.g. "1:33.810" or "93.81"
   cleanLaps: number // count of clean laps
   totalLaps: number // total laps in session
+  spins?: number // count of spins in stint
+  offTrackIncidents?: number // count of off-track excursions in stint
   notes?: string
 }
 
