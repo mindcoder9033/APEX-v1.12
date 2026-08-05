@@ -11,11 +11,9 @@ export const beginnerCurriculum: LevelCurriculum = {
     {
       id: 'mod-1',
       moduleNumber: 1,
-      title: 'Module 1: Moza R3 Hardware & Input Calibration',
+      title: 'Module 1: Hardware & Input Calibration',
       focusArea: 'Wheel & Pedal Ergonomics',
       summary: 'Establish baseline force feedback, pedal linearity, and seating posture for the Moza R3 on Forza Motorsport (2023).',
-      isCompleted: true,
-      isLocked: false,
       sessions: [
         {
           id: 'sess-1-1',
@@ -25,8 +23,6 @@ export const beginnerCurriculum: LevelCurriculum = {
           car: '2021 Hyundai Elantra N',
           track: 'Lime Rock Park - Full Circuit',
           estimatedMinutes: 20,
-          isCompleted: true,
-          isLocked: false,
           steps: [
             {
               id: 'step-1-1-1',
@@ -39,9 +35,7 @@ export const beginnerCurriculum: LevelCurriculum = {
                 'Launch Moza Pit House on PC or Xbox App.',
                 'Depress brake pedal firmly 5 times.',
                 'Ensure maximum brake pressure matches natural leg force threshold.'
-              ],
-              isCompleted: true,
-              isLocked: false
+              ]
             },
             {
               id: 'step-1-1-2',
@@ -58,9 +52,7 @@ export const beginnerCurriculum: LevelCurriculum = {
               telemetryThreshold: {
                 metric: 'Brake Linearity Variance',
                 targetValue: '< 4%'
-              },
-              isCompleted: true,
-              isLocked: false
+              }
             }
           ]
         }
@@ -72,8 +64,7 @@ export const beginnerCurriculum: LevelCurriculum = {
       title: 'Module 2: Smooth Steering & The Racing Line',
       focusArea: 'Vehicle Control & Geometry',
       summary: 'Learn smooth hands-at-9-and-3 steering input, geometric apex hitting, and entry speed management.',
-      isCompleted: false,
-      isLocked: false,
+      prerequisites: ['mod-1'],
       sessions: [
         {
           id: 'sess-2-1',
@@ -83,8 +74,6 @@ export const beginnerCurriculum: LevelCurriculum = {
           car: '2021 Hyundai Elantra N',
           track: 'Lime Rock Park - Classic',
           estimatedMinutes: 30,
-          isCompleted: false,
-          isLocked: false,
           steps: [
             {
               id: 'step-2-1-1',
@@ -96,9 +85,7 @@ export const beginnerCurriculum: LevelCurriculum = {
               instructions: [
                 'Watch line geometry telemetry breakdown.',
                 'Locate Turn 1 braking cone marker.'
-              ],
-              isCompleted: true,
-              isLocked: false
+              ]
             },
             {
               id: 'step-2-1-2',
@@ -114,9 +101,7 @@ export const beginnerCurriculum: LevelCurriculum = {
               telemetryThreshold: {
                 metric: 'Apex Deviation',
                 targetValue: '< 30cm'
-              },
-              isCompleted: false,
-              isLocked: false
+              }
             }
           ]
         }
@@ -128,9 +113,48 @@ export const beginnerCurriculum: LevelCurriculum = {
       title: 'Module 3: Trail Braking & Weight Transfer',
       focusArea: 'Pitch & Roll Dynamics',
       summary: 'Master smooth brake release to keep front tires loaded during turn-in.',
-      isCompleted: false,
-      isLocked: true,
-      sessions: []
+      prerequisites: ['mod-2'],
+      sessions: [
+        {
+          id: 'sess-3-1',
+          sessionNumber: 1,
+          title: 'Session 3.1: Trail Braking Release Rate',
+          description: 'Practice trailing off the brake pedal proportionally as steering angle increases.',
+          car: '2021 Hyundai Elantra N',
+          track: 'Lime Rock Park - Chicane',
+          estimatedMinutes: 35,
+          steps: [
+            {
+              id: 'step-3-1-1',
+              stepNumber: 1,
+              title: 'Front Weight Transfer Mechanics',
+              type: 'LESSON',
+              objective: 'Learn how gentle trail braking keeps weight on front tires for sharp turn-in response.',
+              passingCriteria: 'Understand tire load diagram.',
+              instructions: [
+                'Study weight transfer force vectors.',
+                'Practice smooth foot release rate off the brake pedal.'
+              ]
+            },
+            {
+              id: 'step-3-1-2',
+              stepNumber: 2,
+              title: 'Trail Brake Modulation Drill',
+              type: 'DRILL',
+              objective: 'Maintain 15% brake pressure through turn-in until apex cone.',
+              passingCriteria: 'Smooth decay curve without step drops.',
+              instructions: [
+                'Brake hard at 100m marker.',
+                'Smoothly bleed off brake pressure from 100% down to 10% through entry turn.'
+              ],
+              telemetryThreshold: {
+                metric: 'Brake Release Rate Decay',
+                targetValue: 'Linear (< 5% step drop)'
+              }
+            }
+          ]
+        }
+      ]
     },
     {
       id: 'mod-4',
@@ -138,9 +162,48 @@ export const beginnerCurriculum: LevelCurriculum = {
       title: 'Module 4: Beginner Driver Certification Exam',
       focusArea: 'Academy Graduation',
       summary: 'Comprehensive 10-lap consistency evaluation under APEX objective coaching criteria.',
-      isCompleted: false,
-      isLocked: true,
-      sessions: []
+      prerequisites: ['mod-3'],
+      sessions: [
+        {
+          id: 'sess-4-1',
+          sessionNumber: 1,
+          title: 'Session 4.1: Final Graduation Assessment',
+          description: '10 consecutive clean laps within 1.0 second lap time variance window.',
+          car: '2021 Hyundai Elantra N',
+          track: 'Lime Rock Park - Full Circuit',
+          estimatedMinutes: 45,
+          steps: [
+            {
+              id: 'step-4-1-1',
+              stepNumber: 1,
+              title: 'Certification Pre-flight Check',
+              type: 'LESSON',
+              objective: 'Review all graduation telemetry metrics: apex consistency, linearity, and lap variance.',
+              passingCriteria: 'Verify driver readiness score.',
+              instructions: [
+                'Review past module performance metrics.',
+                'Set tire pressures to calibrated warm targets (32 PSI).'
+              ]
+            },
+            {
+              id: 'step-4-1-2',
+              stepNumber: 2,
+              title: '10-Lap Consistency Graduation Exam',
+              type: 'ASSESSMENT',
+              objective: 'Complete 10 clean laps with lap time variance < 0.800 seconds.',
+              passingCriteria: '10/10 valid laps, lap delta variance < 0.800s, zero track limit violations.',
+              instructions: [
+                'Run 10 laps without resetting.',
+                'Prioritize smooth inputs and early throttle application over single-lap speed.'
+              ],
+              telemetryThreshold: {
+                metric: '10-Lap Variance',
+                targetValue: '< 0.800s'
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

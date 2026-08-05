@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { CurriculumProvider } from './context/CurriculumContext'
 import { AcademyLayout } from './components/layout/AcademyLayout'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { Home } from './pages/Home'
@@ -14,26 +15,28 @@ import { NotFound } from './pages/NotFound'
 export const App: React.FC = () => {
   return (
     <AuthProvider>
-      <Router>
-        <AcademyLayout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/curriculum" element={<CurriculumOverview />} />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <DriverProfile />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/forgot-password" element={<PasswordReset />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AcademyLayout>
-      </Router>
+      <CurriculumProvider>
+        <Router>
+          <AcademyLayout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/curriculum" element={<CurriculumOverview />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <DriverProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<PasswordReset />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AcademyLayout>
+        </Router>
+      </CurriculumProvider>
     </AuthProvider>
   )
 }

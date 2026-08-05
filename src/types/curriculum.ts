@@ -1,3 +1,5 @@
+export type DriverLevel = 'BEGINNER' | 'INTERMEDIATE' | 'EXPERT'
+
 export type StepType = 'LESSON' | 'DRILL' | 'ASSESSMENT'
 
 export interface Step {
@@ -35,6 +37,7 @@ export interface Module {
   title: string
   focusArea: string
   summary: string
+  prerequisites?: string[]
   sessions: Session[]
   isCompleted?: boolean
   isLocked?: boolean
@@ -42,10 +45,32 @@ export interface Module {
 
 export interface LevelCurriculum {
   id: string
-  levelName: 'BEGINNER' | 'INTERMEDIATE' | 'EXPERT'
+  levelName: DriverLevel
   title: string
   subtitle: string
   objective: string
   graduateProfile: string
+  prerequisiteLevel?: DriverLevel
   modules: Module[]
 }
+
+export interface StepProgressRecord {
+  stepId: string
+  completed: boolean
+  completedAt?: string
+  telemetryData?: Record<string, unknown>
+}
+
+export interface LevelProgressSummary {
+  levelId: DriverLevel
+  totalModules: number
+  completedModules: number
+  totalSessions: number
+  completedSessions: number
+  totalSteps: number
+  completedSteps: number
+  percentComplete: number
+  isUnlocked: boolean
+  isCompleted: boolean
+}
+
