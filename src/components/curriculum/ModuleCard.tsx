@@ -13,7 +13,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({ module }) => {
   const {
     activeLevel,
     activeModuleId,
-    setActiveModuleId,
+    selectModuleAndAdvance,
     setActiveSessionId,
     progressMap,
     devUnlockMode
@@ -25,7 +25,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({ module }) => {
 
   const handleClick = () => {
     if (unlocked) {
-      setActiveModuleId(module.id)
+      selectModuleAndAdvance(module.id)
       if (module.sessions.length > 0) {
         setActiveSessionId(module.sessions[0].id)
       }
@@ -80,7 +80,7 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({ module }) => {
 
         {unlocked && (
           <span className="flex items-center text-[#E10600] font-semibold">
-            View Details <ChevronRight className="w-4 h-4 ml-0.5" />
+            Select Module <ChevronRight className="w-4 h-4 ml-0.5" />
           </span>
         )}
       </div>

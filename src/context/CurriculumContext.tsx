@@ -16,6 +16,8 @@ import {
 import { progressService } from '../services/progressService'
 import { useAuth } from './AuthContext'
 
+export type CurriculumFlowStep = 'level' | 'module' | 'session'
+
 interface CurriculumContextType {
   activeLevelName: DriverLevel
   setActiveLevelName: (level: DriverLevel) => void
@@ -23,6 +25,11 @@ interface CurriculumContextType {
   setActiveModuleId: (id: string) => void
   activeSessionId: string
   setActiveSessionId: (id: string) => void
+  flowStep: CurriculumFlowStep
+  setFlowStep: (step: CurriculumFlowStep) => void
+  selectLevelAndAdvance: (level: DriverLevel) => void
+  selectModuleAndAdvance: (moduleId: string) => void
+  goBackStep: () => void
   progressMap: ProgressMap
   devUnlockMode: boolean
   toggleDevUnlockMode: () => void
@@ -41,6 +48,7 @@ const CurriculumContext = createContext<CurriculumContextType | undefined>(undef
 export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { profile } = useAuth()
   const [activeLevelName, setActiveLevelName] = useState<DriverLevel>('BEGINNER')
+  const [flowStep, setFlowStep] = useState<CurriculumFlowStep>('level')
   const [progressMap, setProgressMap] = useState<ProgressMap>(() => progressService.getLocalProgress())
   const [devUnlockMode, setDevUnlockMode] = useState<boolean>(false)
 
@@ -93,6 +101,24 @@ export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const levelSummary = getLevelProgressSummary(activeLevelName, progressMap, devUnlockMode)
   const prescribedTarget = getNextPrescribedTarget(progressMap, activeLevelName, devUnlockMode)
 
+  const selectLevelAndAdvance = useCallback((level: DriverLevel) => {
+    setActiveLevelName(level)
+    setFlowStep('module')
+  }, [])
+
+  const selectModuleAndAdvance = useCallback((moduleId: string) => {
+    setActiveModuleId(moduleId)
+    setFlowStep('session')
+  }, [])
+
+  const goBackStep = useCallback(() => {
+    setFlowStep((prev) => {
+      if (prev === 'session') return 'module'
+      if (prev === 'module') return 'level'
+      return 'level'
+    })
+  }, [])
+
   const toggleDevUnlockMode = () => {
     setDevUnlockMode((prev) => !prev)
   }
@@ -115,6 +141,7 @@ export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       setActiveLevelName(target.level.levelName)
       setActiveModuleId(target.module.id)
       setActiveSessionId(target.session.id)
+      setFlowStep('session')
     }
   }, [progressMap, activeLevelName, devUnlockMode])
 
@@ -132,6 +159,11 @@ export const CurriculumProvider: React.FC<{ children: React.ReactNode }> = ({ ch
         setActiveModuleId,
         activeSessionId,
         setActiveSessionId,
+        flowStep,
+        setFlowStep,
+        selectLevelAndAdvance,
+        selectModuleAndAdvance,
+        goBackStep,
         progressMap,
         devUnlockMode,
         toggleDevUnlockMode,
@@ -157,3 +189,4 @@ export const useCurriculum = (): CurriculumContextType => {
   }
   return context
 }
+
