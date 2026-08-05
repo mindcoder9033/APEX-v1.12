@@ -46,7 +46,7 @@ export const AcademyLayout: React.FC<AcademyLayoutProps> = ({ children }) => {
       <div
         className={`
           flex-1 flex flex-col transition-all duration-300 ease-in-out
-          lg:${isCollapsed ? 'pl-16' : 'pl-64'}
+          ${isCollapsed ? 'lg:pl-16' : 'lg:pl-64'}
         `}
       >
         <Header
@@ -54,23 +54,8 @@ export const AcademyLayout: React.FC<AcademyLayoutProps> = ({ children }) => {
           isSidebarCollapsed={isCollapsed}
         />
 
-        {/* Academy Principles Ticker */}
-        <div className="bg-[#121216]/90 border-b border-[#262630] py-1.5 px-4 text-center font-mono text-xs text-[#9CA3AF] flex items-center justify-center gap-4">
-          <span>
-            <strong className="text-[#E10600]">APEX RULE:</strong> Mastery Before Progression
-          </span>
-          <span className="hidden sm:inline text-[#262630]">|</span>
-          <span className="hidden sm:inline">
-            <strong className="text-[#3B82F6]">HARDWARE:</strong> Moza R3 Wheel
-          </span>
-          <span className="hidden md:inline text-[#262630]">|</span>
-          <span className="hidden md:inline">
-            <strong className="text-[#FFB800]">SIMULATOR:</strong> Forza Motorsport (2023)
-          </span>
-        </div>
-
         {/* Page Main Content Stream */}
-        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
           {children}
         </main>
 

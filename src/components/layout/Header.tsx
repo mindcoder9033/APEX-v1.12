@@ -12,7 +12,7 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleMobileSidebar
 }) => {
   return (
-    <header className="bg-[#121216] border-b border-[#262630] sticky top-0 z-30">
+    <header className="bg-[#121216]/90 backdrop-blur-xs border-b border-[#262630] sticky top-0 z-30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Left Side: Mobile Hamburger & Brand Logo */}
         <div className="flex items-center gap-3">
@@ -25,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({
             <Menu className="w-6 h-6" />
           </button>
 
-          {/* Brand Logo (Visible on mobile or when desktop sidebar is collapsed) */}
+          {/* Brand Logo (Visible on mobile viewports) */}
           <Link to="/" className="flex items-center gap-3 group shrink-0 lg:hidden">
             <div className="w-8 h-8 bg-[#E10600] text-white rounded-md flex items-center justify-center font-bold text-lg shadow-[0_0_12px_rgba(225,6,0,0.4)] transition-transform group-hover:scale-105">
               A
@@ -39,15 +39,6 @@ export const Header: React.FC<HeaderProps> = ({
               </span>
             </div>
           </Link>
-
-          {/* Top Bar Telemetry Badge (Desktop) */}
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-[#181820] border border-[#262630] rounded-full text-xs font-mono text-[#9CA3AF]">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E10600] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#E10600]"></span>
-            </span>
-            <span className="text-[#F3F4F6] font-medium">LIVE SESSION LOGGING</span>
-          </div>
         </div>
 
         {/* Right Side: User Menu & Quick Controls */}
