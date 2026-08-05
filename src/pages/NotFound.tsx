@@ -19,8 +19,8 @@ export const NotFound: React.FC = () => {
           </p>
         </div>
 
-        <Link to="/" className="block">
-          <Button className="w-full">Return to Academy Gate</Button>
+        <Link to="/dashboard" className="block">
+          <Button className="w-full">Return to Dashboard</Button>
         </Link>
       </Card>
     </div>

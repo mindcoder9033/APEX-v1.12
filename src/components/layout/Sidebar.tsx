@@ -2,7 +2,6 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard,
-  Gauge,
   Compass,
   UserCheck,
   ChevronLeft,
@@ -32,11 +31,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       label: 'Dashboard',
       path: '/dashboard',
       icon: LayoutDashboard
-    },
-    {
-      label: 'Academy Gate',
-      path: '/',
-      icon: Gauge
     },
     {
       label: 'Curriculum',
