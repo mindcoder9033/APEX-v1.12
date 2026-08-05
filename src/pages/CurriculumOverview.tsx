@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useCurriculum } from '../context/CurriculumContext'
 import { LevelSelector } from '../components/curriculum/LevelSelector'
 import { CurriculumProgressBanner } from '../components/curriculum/CurriculumProgressBanner'
@@ -6,16 +6,24 @@ import { ModuleCard } from '../components/curriculum/ModuleCard'
 import { SessionCard } from '../components/curriculum/SessionCard'
 import { LessonHeader } from '../components/coaching/LessonHeader'
 import { ObjectiveFeedbackCard } from '../components/coaching/ObjectiveFeedbackCard'
+import { ModuleExamModal } from '../components/assessment/ModuleExamModal'
+import { isModuleCompleted } from '../lib/curriculumEngine'
 import { Card } from '../components/ui/Card'
-import { Lock, ShieldAlert } from 'lucide-react'
+import { Lock, ShieldAlert, Award, CheckCircle2 } from 'lucide-react'
+import { Module } from '../types/curriculum'
 
 export const CurriculumOverview: React.FC = () => {
   const {
     activeLevel,
     activeModule,
     levelSummary,
-    devUnlockMode
+    devUnlockMode,
+    progressMap
   } = useCurriculum()
+
+  const [examModalModule, setExamModalModule] = useState<Module | null>(null)
+
+  const activeModuleIsCompleted = activeModule ? isModuleCompleted(activeModule, progressMap) : false
 
   return (
     <div className="space-y-8 pb-12">
@@ -85,6 +93,34 @@ export const CurriculumOverview: React.FC = () => {
             </Card>
           ) : (
             <>
+              {/* Module Mastered Banner & Exam Button */}
+              {activeModuleIsCompleted && (
+                <div className="bg-[#12151E] border border-[#00E599]/40 rounded-xl p-4 flex flex-wrap items-center justify-between gap-4 shadow-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#00E599]/10 border border-[#00E599]/30 flex items-center justify-center text-[#00E599]">
+                      <Award className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono text-[#00E599] uppercase font-bold flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" /> Module Sessions Completed
+                        </span>
+                      </div>
+                      <h4 className="text-sm font-bold text-[#F3F4F6]">
+                        {activeModule.title} Examination Ready
+                      </h4>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setExamModalModule(activeModule)}
+                    className="px-4 py-2 rounded-lg bg-[#00E599] text-[#090A0F] hover:bg-[#00FFAB] font-mono text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-[#00E599]/20"
+                  >
+                    <Award className="w-4 h-4" />
+                    <span>Take Module Examination</span>
+                  </button>
+                </div>
+              )}
+
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-xs font-mono uppercase tracking-widest text-[#9CA3AF]">
@@ -114,6 +150,18 @@ export const CurriculumOverview: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Module Examination Modal */}
+      {examModalModule && (
+        <ModuleExamModal
+          module={examModalModule}
+          isOpen={Boolean(examModalModule)}
+          onClose={() => setExamModalModule(null)}
+          onCompleteExam={() => {
+            // Keep open or let user confirm completion
+          }}
+        />
+      )}
     </div>
   )
 }

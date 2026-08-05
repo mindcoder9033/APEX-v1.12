@@ -3,10 +3,12 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useCurriculum } from '../context/CurriculumContext'
 import { useAuth } from '../context/AuthContext'
 import { Step, Session } from '../types/curriculum'
+import { SessionAssessmentRecord, LapTimeEntry } from '../types/assessment'
 import { allCurricula } from '../data/allCurriculum'
 import { getSessionDetailExtra } from '../data/sessionDetails'
 import { getInitialActiveStepIndex, isStepLocked } from '../lib/sessionPlayerEngine'
 import { sessionPlayerService } from '../services/sessionPlayerService'
+import { assessmentService } from '../services/assessmentService'
 import { SessionHeader } from '../components/session/SessionHeader'
 import { StepStepper } from '../components/session/StepStepper'
 import { SessionOverviewSection } from '../components/session/SessionOverviewSection'
@@ -15,7 +17,10 @@ import { PrescriptionCard } from '../components/session/PrescriptionCard'
 import { StepExecutionCard } from '../components/session/StepExecutionCard'
 import { ReflectionCard } from '../components/session/ReflectionCard'
 import { SessionSummaryModal } from '../components/session/SessionSummaryModal'
-import { BookOpen, Sliders, PlayCircle, MessageSquare, Info } from 'lucide-react'
+import { PerformanceEntryModal } from '../components/assessment/PerformanceEntryModal'
+import { MasteryEvaluationCard } from '../components/assessment/MasteryEvaluationCard'
+import { RemediationCard } from '../components/assessment/RemediationCard'
+import { BookOpen, Sliders, PlayCircle, MessageSquare, Info, Trophy, PlusCircle } from 'lucide-react'
 
 export const SessionPlayer: React.FC = () => {
   const { sessionId } = useParams<{ sessionId: string }>()
@@ -54,14 +59,20 @@ export const SessionPlayer: React.FC = () => {
     return sessionPlayerService.getSessionState(session.id)
   }, [session?.id])
 
+  // Assessment Record State
+  const [assessmentRecord, setAssessmentRecord] = useState<SessionAssessmentRecord | null>(() => {
+    if (!session) return null
+    return assessmentService.getAssessmentRecord(session.id)
+  })
+
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(() => {
     if (!session) return 0
     return getInitialActiveStepIndex(session, progressMap, savedState, devUnlockMode)
   })
 
-  const [activeTab, setActiveTab] = useState<'EXECUTION' | 'OVERVIEW' | 'THEORY' | 'PRESCRIPTION' | 'REFLECTION'>(
-    'EXECUTION'
-  )
+  const [activeTab, setActiveTab] = useState<
+    'EXECUTION' | 'ASSESSMENT' | 'THEORY' | 'PRESCRIPTION' | 'REFLECTION' | 'OVERVIEW'
+  >('EXECUTION')
 
   const [reflections, setReflections] = useState<Record<string, string>>(
     () => savedState?.reflections || {}
@@ -71,12 +82,14 @@ export const SessionPlayer: React.FC = () => {
   )
   const [lastSavedText, setLastSavedText] = useState<string | undefined>()
   const [showSummaryModal, setShowSummaryModal] = useState(false)
+  const [showEntryModal, setShowEntryModal] = useState(false)
 
   // Keep step index in valid range when session changes
   useEffect(() => {
     if (session) {
       const initIdx = getInitialActiveStepIndex(session, progressMap, savedState, devUnlockMode)
       setCurrentStepIndex(initIdx)
+      setAssessmentRecord(assessmentService.getAssessmentRecord(session.id))
     }
   }, [session?.id])
 
@@ -118,8 +131,8 @@ export const SessionPlayer: React.FC = () => {
     triggerAutosave(currentStepIndex, reflections, confidenceRating)
 
     // Check if session completed
-    const allCompleted = session.steps.every(
-      (s: Step) => s.id === step.id ? !progressMap[s.id] : progressMap[s.id]
+    const allCompleted = session.steps.every((s: Step) =>
+      s.id === step.id ? !progressMap[s.id] : progressMap[s.id]
     )
 
     if (allCompleted) {
@@ -139,6 +152,19 @@ export const SessionPlayer: React.FC = () => {
     setReflections(updatedReflections)
     if (rating) setConfidenceRating(rating)
     triggerAutosave(currentStepIndex, updatedReflections, rating)
+  }
+
+  // Handle Telemetry Performance Submission
+  const handleSubmitTelemetry = async (entry: LapTimeEntry) => {
+    if (!session) return
+    const record = await assessmentService.saveAssessmentEntry(
+      session.id,
+      session.title,
+      entry,
+      profile?.id
+    )
+    setAssessmentRecord(record)
+    setActiveTab('ASSESSMENT')
   }
 
   if (!session || !module || !level) {
@@ -189,7 +215,26 @@ export const SessionPlayer: React.FC = () => {
             devUnlockMode={devUnlockMode}
           />
 
-          {/* Module & Hardware Quick Reference Card */}
+          {/* Performance Entry Quick Trigger Card */}
+          <div className="bg-[#12151E] border border-[#262C3D] rounded-xl p-4 space-y-3">
+            <div className="flex items-center justify-between text-xs font-mono text-[#9CA3AF]">
+              <span>Assessment Status</span>
+              {assessmentRecord ? (
+                <span className="text-[#00E599] font-bold">{assessmentRecord.result.grade}</span>
+              ) : (
+                <span className="text-[#FFB800]">Not Evaluated</span>
+              )}
+            </div>
+            <button
+              onClick={() => setShowEntryModal(true)}
+              className="w-full py-2 px-3 rounded-lg bg-[#00E599]/10 hover:bg-[#00E599]/20 border border-[#00E599]/40 text-[#00E599] font-mono text-xs font-bold transition-all flex items-center justify-center gap-2"
+            >
+              <PlusCircle className="w-4 h-4" />
+              <span>{assessmentRecord ? 'Update Telemetry Entry' : 'Log Performance Telemetry'}</span>
+            </button>
+          </div>
+
+          {/* Module Context Card */}
           <div className="bg-[#12151E] border border-[#262C3D] rounded-xl p-4 space-y-3">
             <div className="flex items-center justify-between text-xs font-mono text-[#9CA3AF]">
               <span>Module Context</span>
@@ -217,6 +262,18 @@ export const SessionPlayer: React.FC = () => {
             >
               <PlayCircle className="w-3.5 h-3.5" />
               <span>Step Drill</span>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('ASSESSMENT')}
+              className={`flex-1 py-2 px-3 rounded-lg text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
+                activeTab === 'ASSESSMENT'
+                  ? 'bg-[#00E599] text-[#090A0F]'
+                  : 'text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#090A0F]'
+              }`}
+            >
+              <Trophy className="w-3.5 h-3.5" />
+              <span>Assessment</span>
             </button>
 
             <button
@@ -283,6 +340,46 @@ export const SessionPlayer: React.FC = () => {
             />
           )}
 
+          {activeTab === 'ASSESSMENT' && (
+            <div className="space-y-6">
+              {assessmentRecord ? (
+                <>
+                  <MasteryEvaluationCard
+                    result={assessmentRecord.result}
+                    onReevaluate={() => setShowEntryModal(true)}
+                  />
+
+                  {assessmentRecord.remediationPlan && (
+                    <RemediationCard
+                      plan={assessmentRecord.remediationPlan}
+                      onRetryDrill={() => {
+                        setCurrentStepIndex(0)
+                        setActiveTab('EXECUTION')
+                      }}
+                    />
+                  )}
+                </>
+              ) : (
+                <div className="bg-[#12151E] border border-[#262C3D] rounded-2xl p-8 text-center space-y-4">
+                  <Trophy className="w-12 h-12 text-[#FFB800] mx-auto" />
+                  <div className="space-y-1">
+                    <h3 className="text-lg font-bold text-[#F3F4F6]">Session Assessment Pending</h3>
+                    <p className="text-xs text-[#9CA3AF] max-w-md mx-auto">
+                      Log your lap times and clean lap count to receive an automated mastery evaluation and telemetry diagnostic report.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setShowEntryModal(true)}
+                    className="px-6 py-2.5 rounded-xl bg-[#00E599] text-[#090A0F] hover:bg-[#00FFAB] font-mono text-xs font-bold transition-all inline-flex items-center gap-2 shadow-lg shadow-[#00E599]/20"
+                  >
+                    <PlusCircle className="w-4 h-4" />
+                    <span>Enter Performance Telemetry</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
           {activeTab === 'THEORY' && (
             <TheorySection step={currentStep} extraDetails={extraDetails} />
           )}
@@ -323,6 +420,18 @@ export const SessionPlayer: React.FC = () => {
             setShowSummaryModal(false)
             setCurrentStepIndex(0)
           }}
+        />
+      )}
+
+      {/* Performance Entry Dialog Modal */}
+      {showEntryModal && (
+        <PerformanceEntryModal
+          sessionId={session.id}
+          sessionTitle={session.title}
+          isOpen={showEntryModal}
+          onClose={() => setShowEntryModal(false)}
+          onSubmit={handleSubmitTelemetry}
+          existingEntry={assessmentRecord?.entry}
         />
       )}
     </div>
